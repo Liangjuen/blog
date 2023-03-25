@@ -1,0 +1,20 @@
+html[theme='light'] {
+    --color-background: var(--vt-c-white);
+    --color-background-soft: var(--vt-c-white-soft);
+    --color-background-mute: var(--vt-c-white-mute);
+  
+    --color-border: var(--vt-c-divider-light-2);
+    --color-border-hover: var(--color-border-hover-light);
+    --color-active: var(--color-border-hover);
+    --color-avtive-text: var(--vt-c-white);
+    --box-shadow: 0 1px 8px 0 rgba(0,0,0,0.1);
+
+    --color-heading: var(--vt-c-text-light-1);
+    --color-text: var(--vt-c-text-light-1);
+  
+    --section-gap: 160px;
+
+    --color-background-main: var(--vt-c-white-soft);
+    --color-text-background: var(--vt-c-white)
+
+}

@@ -1,0 +1,89 @@
+/* color palette from <https://github.com/vuejs/theme> */
+
+:root {
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-mute: #f2f2f2;
+
+  --vt-c-black: #1e272e;
+  --vt-c-black-soft: #3d3d3d;
+  --vt-c-black-mute: #303952;
+
+  --vt-c-indigo: #2c3e50;
+
+  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-2: rgba(241, 242, 246,1.0);
+
+
+  /* 页头水波特效 */
+  --wave-1: #4cd137;
+  --wave-2: #00a8ff;
+  --wave-3: #fbc531;
+  --wave-4: #7f8fa6;
+  --wave-5: #2ecc71;
+
+  --color-border-hover-light: #00a8ff;
+  --color-border-hover-dark: #fbc531;
+}
+
+/* semantic color variables for this project */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+html {
+  height: 100vh;
+  overflow-y: overlay;
+  background-color: var(--color-background-main);
+}
+a {
+  text-decoration: none;
+}
+body {
+  color: var(--color-text);
+  /* transition: color 0.5s, background-color 0.5s; */
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border-hover);
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+#app>div {
+  margin-top: 60px;
+  background-color: var(--color-background-main);
+  min-height: calc(100vh - 140px);
+}

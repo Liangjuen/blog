@@ -1,0 +1,17 @@
+html[theme='dark'] {
+    --color-background: var(--vt-c-black);
+    --color-background-soft: var(--vt-c-black-soft);
+    --color-background-mute: var(--vt-c-black-mute);
+
+    --color-border: var(--vt-c-divider-dark-2);
+    --color-border-hover: var(--color-border-hover-dark);
+    --color-active: var(--color-border-hover);
+    --color-avtive-text: var(--vt-c-white);
+    --box-shadow: 0 1px 8px 0 rgba(0,0,0,0.1);
+
+    --color-heading: var(--vt-c-text-dark-1);
+    --color-text: var(--vt-c-text-dark-2);
+
+    --color-background-main: var(--vt-c-black);
+    --color-text-background: var(--color-background-soft)
+}
