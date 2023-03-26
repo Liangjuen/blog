@@ -5,7 +5,6 @@
 
 import type { PiniaPluginContext } from 'pinia'
 import 'pinia'
-import { toRaw } from 'vue'
 
 declare module 'pinia' {
     export interface DefineStoreOptionsBase<S, Store> {
@@ -15,14 +14,13 @@ declare module 'pinia' {
 
 type Store = PiniaPluginContext['store']
 
-let defaultStorage: Storage = sessionStorage
+interface LastingPluginOptions {
+    defaultStorage?: StorageName
+}
+
+const defaultStorage: Storage = sessionStorage
 const __piniaKey__: string = 'pinia'
 const getKey = (str: string) => `${__piniaKey__} - ${str}`
-
-// 插件配置
-export interface LastingOptions {
-    defaultStoreName?: StorageName
-}
 
 export type StorageName = 'session' | 'local'
 
@@ -30,11 +28,11 @@ export interface getStorageOptions {
     storage: Storage,
     key: string
 }
-
+type StateKey = string
 export interface LastingStrategy {
     storage?: Storage,
     key?: string,
-    exclude?: string[]
+    exclude?: StateKey[]
 }
 
 export interface LastingOptions {
@@ -59,24 +57,20 @@ export const getStore = (options: getStorageOptions) => {
     return (JSON.parse(storage.getItem(key) as string) || {})
 }
 
-export default (lastingOptions?: LastingOptions) => {
-    if(lastingOptions) {
-        const { defaultStoreName } = lastingOptions
-        defaultStorage = defaultStoreName == 'local'? localStorage : sessionStorage 
-    }
-    return ({ options, store }: PiniaPluginContext) => {
-        if(options.lasting?.enabled) {
-            const strategies = options.lasting?.strategies? options.lasting?.strategies : {}
-            const strategy: LastingStrategy = {
-                storage: strategies.storage || defaultStorage,
-                key: strategies.key || getKey(store.$id),
-                exclude: strategies.exclude || []
-            }
-            const data = toRaw(getStore({ storage: strategy.storage as Storage, key: strategy.key as string}))
-            store.$subscribe(() => {
-                updateStore(strategy, store) 
-            })
-            return { ...data }
+export default ({ options, store }: PiniaPluginContext) => {
+    if(options.lasting?.enabled) {
+        const strategies = options.lasting?.strategies? options.lasting?.strategies : {}
+        const strategy: LastingStrategy = {
+            storage: strategies.storage || defaultStorage,
+            key: strategies.key || getKey(store.$id),
+            exclude: strategies.exclude || []
         }
+        const data = getStore({ storage: strategy.storage as Storage, key: strategy.key as string})
+        store.$subscribe(() => {
+            updateStore(strategy, store) 
+        })
+        console.log({...data});
+        
+        return { ...data }
     }
 }

@@ -12,7 +12,7 @@ const store = createPinia()
 const app = createApp(App)
 
 // 使用状态持久化插件
-store.use(piniaPlugin())
+store.use(piniaPlugin)
 // 挂载全局自定义指令
 mountDirective(app)
 
