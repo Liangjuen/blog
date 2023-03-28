@@ -17,11 +17,33 @@
                 </div>
             </div>
         </div>
+        <Pagination 
+            :total="21" 
+            v-model:current-page="currentPage" 
+            @next-click="handelNextClcik" 
+            @prev-click="handelPrevClick" 
+            @current-change="handelCurrentPageChange"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import Hero from './Hero.vue'
+import Pagination from '../../components/Pagination.vue'
+let currentPage = ref<number>(1)
+let handelPrevClick = (num:number) => {
+    // ...
+    currentPage.value  = num
+}
+const handelNextClcik = (num:number) => {
+    // ...
+    currentPage.value  = num
+}
+const handelCurrentPageChange = (num:number) => {
+    // ...
+    currentPage.value  = num
+}
 </script>
 
 <style scoped>
