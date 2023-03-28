@@ -2,7 +2,7 @@
     <Header/>
     <div>
         <router-view v-slot="{ Component }">
-            <transition name="move" mode="out-in" appear>
+            <transition name="view-move" mode="out-in" appear>
                 <component :is="Component" />
             </transition>
         </router-view>
@@ -20,11 +20,11 @@ import GoTop from '../components/GoTop.vue'
 <style>
 
 /* 页面跳转动画 */
-.move-leave-active {
+.view-move-leave-active {
     animation: bounce-in .4s reverse;
     transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
-  .move-enter-active {
+  .view-move-enter-active {
     animation: bounce-in .3s;
     transition: all .4s ease;
   }

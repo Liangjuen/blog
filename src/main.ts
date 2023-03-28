@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import piniaPlugin from './plugins/piniaPlugin'
+import piniaPlugin from 'pinia-plugin-lasting'
 import App from './App.vue'
 import router from './router'
 import mountDirective from './directive/index'

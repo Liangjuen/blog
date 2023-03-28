@@ -51,7 +51,7 @@
     let theme = computed(()=> `theme${(getRandomInt(4) + 1)}`)
 </script>
 
-<style>
+<style scoped>
 /* 定义主题 --start */
 .theme1 {
     background-color: var(--wave-1);
@@ -211,7 +211,7 @@
 section {
     position: relative;
     width: 100%;
-    height: 28rem;
+    height: 30rem;
     overflow: hidden;
     display: block;
 }
@@ -234,7 +234,7 @@ section {
     --speed: 38;
     --opacity: 1;
     --height: 6;
-    --width: 180;
+    --width: 380;
     --lightness: 100;
     --rise: 2;
     --index: 1000;
@@ -245,29 +245,29 @@ section {
     --speed: 32;
     --opacity: 0.6;
     --height: 6;
-    --width: 200;
+    --width: 380;
     --lightness: 95;
     --rise: 3;
     --index: 999;
-    --delay: -2;
+    --delay: -1;
 }
 
 .wave:nth-of-type(3) {
-    --speed: 30;
-    --opacity: 0.4;
+    --speed: 34;
+    --opacity: 0.6;
     --height: 8;
-    --width: 240;
+    --width: 380;
     --lightness: 90;
     --rise: 5;
     --index: 998;
-    --delay: -5;
+    --delay: -2;
 }
 
 .wave:nth-of-type(4) {
-    --speed: 25;
-    --opacity: 0.2;
+    --speed: 36;
+    --opacity: 0.6;
     --height: 10;
-    --width: 300;
+    --width: 380;
     --lightness: 85;
     --rise: 7;
     --index: 997;

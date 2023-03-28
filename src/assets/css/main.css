@@ -6,7 +6,7 @@
   height: 100%;
 }
 .center {
-  max-width: 1200px !important;
+  max-width: 1280px !important;
   margin: 0 auto;
 }
 
@@ -14,35 +14,11 @@
   html {
     font-size: 12px;
   }
-  .main-content-item {
-    flex: 1 0 80%;
-    height: 18rem;
-  }
-  .main-content-item .cover {
-    flex: 1 0 100%;
-    height: 64%;
-  }
-  .main-content-item .title {
-      flex: 1 0 100%;
-      height: 36%;
-  }
 }
 
 @media screen and (min-width: 375px) and (max-width: 750px) {
   html {
     font-size: 14px;
-  }
-  .main-content-item {
-    flex: 1 0 60%;
-    height: 20rem;
-  }
-  .main-content-item .cover {
-    flex: 1 0 100%;
-    height: 64%;
-  }
-  .main-content-item .title {
-      flex: 1 0 100%;
-      height: 36%;
   }
 }
 
@@ -50,55 +26,16 @@
   html {
     font-size: 16px;
   }
-  .main-content-item {
-    flex: 1 0 60%;
-  }
-  .main-content-item .cover {
-    flex: 1 0 40%;
-    height: 100%;
-  }
-  .main-content-item .title {
-      flex: 1 0 55%;
-      height: 100%;
-  }
 }
 
 @media screen and (min-width: 1081px) and (max-width: 1280px) {
   html {
     font-size: 16px;
   }
-  .main-content-item {
-    flex: 1 0 60%;
-  }
-  .main-content-item .cover {
-    flex: 1 0 40%;
-    height: 100%;
-  }
-  .main-content-item .title {
-      flex: 1 0 60%;
-      height: 100%;
-  }
 }
-
-/* @media screen and (min-width: 1281px) and (max-width: 1440px) {
-  html {
-    font-size: 16px;
-  }
-} */
 
 @media screen and (min-width: 1281px) {
   html {
     font-size: 16px;
-  }
-  .main-content-item {
-    flex: 1 0 40%;
-    height: 20rem !important;
-  }
-  .main-content-item .cover {
-    flex: 1 0 100%;
-    height: 60%;
-  }
-  .main-content-item .title {
-      flex: 1 0 100%;
   }
 }

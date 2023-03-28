@@ -10,7 +10,8 @@ html[theme='dark'] {
     --box-shadow: 0 1px 8px 0 rgba(0,0,0,0.1);
 
     --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+    --color-text: var(--vt-c-text-dark-1);
+    --color-text-2: var(--vt-c-text-dark-2);
 
     --color-background-main: var(--vt-c-black);
     --color-text-background: var(--color-background-soft)

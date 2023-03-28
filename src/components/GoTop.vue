@@ -67,6 +67,6 @@ import { computed } from 'vue';
 .move-enter-from,
 .move-leave-to {
   opacity: 0;
-  transform: translateY(70px);
+  transform: translateY(90px);
 }
 </style>
