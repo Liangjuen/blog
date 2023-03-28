@@ -4,11 +4,11 @@
         <div class="pagination-center">
             <span class="page-size" v-show="currentPage > 1" @click="changePage(1)">1</span>
             <span class="iconfont icon-more-outline" v-show="currentPage > 4"></span>
-            <span class="page-size" @click="changePage(currentPage - 2)" v-show="currentPage > 3">{{ currentPage - 2 }}</span>
-            <span class="page-size last" @click="changePage(currentPage - 1)" v-show="currentPage > 2">{{ currentPage - 1 }}</span>
+            <span class="page-size last" @click="changePage(currentPage - 2)" v-show="currentPage > 3">{{ currentPage - 2 }}</span>
+            <span class="page-size" @click="changePage(currentPage - 1)" v-show="currentPage > 2">{{ currentPage - 1 }}</span>
             <span class="page-size current">{{ currentPage }}</span>
-            <span class="page-size next" @click="changePage(currentPage + 1)" v-show="currentPage < total - 1">{{ currentPage + 1 }}</span>
-            <span class="page-size" @click="changePage(currentPage + 2)" v-show="currentPage < total - 2">{{ currentPage + 2 }}</span>
+            <span class="page-size" @click="changePage(currentPage + 1)" v-show="currentPage < total - 1">{{ currentPage + 1 }}</span>
+            <span class="page-size next" @click="changePage(currentPage + 2)" v-show="currentPage < total - 2">{{ currentPage + 2 }}</span>
             <span class="iconfont icon-more-outline" v-show="total - currentPage > 3" ></span>
             <span class="page-size" @click="changePage(total)" v-show="currentPage < total">{{ total }}</span>
         </div>
@@ -69,7 +69,7 @@ const checkLast = () => {
         align-items: center;
     }
     .pagination-center {
-        width: 390px;
+        width: 32rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -80,16 +80,16 @@ const checkLast = () => {
     }
     .btn, .page-size  {
         display: inline-block;
-        width: 38px;
-        height: 38px;
+        width: 3rem;
+        height: 3rem;
         background-color: var(--color-text-background);
-        line-height: 38px;
+        line-height: 3rem;
         text-align: center;
         border-radius: 50%;
         cursor: pointer;
         box-shadow: var(--box-shadow);
         transition: all 0.3s;
-        margin: 0 5px;
+        margin: 0 0.5rem;
     }
     .btn:hover, .page-size:hover {
         color: var(--color-avtive-text);
@@ -107,8 +107,8 @@ const checkLast = () => {
     }
     .goto {
         border: 1px solid var(--color-border);
-        width: 60px;
-        height: 30px;
+        width: 5rem;
+        height: 2.5rem;
         border-radius: 4px;
         outline: none;
         transition: all 0.3s;
@@ -121,5 +121,16 @@ const checkLast = () => {
     }
     .goto:focus {
         border: 1px solid var(--color-active);
+    }
+    @media screen and (max-width: 700px) {
+        .pagination-center {
+            width: 20rem;
+        }
+        .last, .next, .pagination-center .iconfont {
+            display: none;
+        }
+        .goto-box {
+            display: none;
+        }
     }
 </style>
