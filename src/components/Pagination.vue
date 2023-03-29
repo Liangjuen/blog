@@ -87,13 +87,15 @@ const checkLast = () => {
         text-align: center;
         border-radius: 50%;
         cursor: pointer;
-        box-shadow: var(--box-shadow);
+        
         transition: all 0.3s;
         margin: 0 0.5rem;
     }
     .btn:hover, .page-size:hover {
         color: var(--color-avtive-text);
         background-color: var(--color-active);
+        transform: scale(0.85);
+        box-shadow: var(--box-shadow);
     }
     .iconfont {
         margin: 0 5px;
