@@ -82,8 +82,20 @@ a {
   text-decoration: none;
   color: var(--color-text);
 }
-#app>div {
-  margin-top: 60px;
-  background-color: var(--color-background-main);
-  min-height: calc(100vh - 140px);
+
+img {
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: none;
+  margin: auto;
+  display: block;
+  width: 0px;
+  height: 0px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }

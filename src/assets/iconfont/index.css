@@ -1,9 +1,9 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2771797 */
-  src: url('//at.alicdn.com/t/c/font_2771797_epffkp530xh.woff2?t=1679577166002') format('woff2'),
-       url('//at.alicdn.com/t/c/font_2771797_epffkp530xh.woff?t=1679577166002') format('woff'),
-       url('//at.alicdn.com/t/c/font_2771797_epffkp530xh.ttf?t=1679577166002') format('truetype'),
-       url('//at.alicdn.com/t/c/font_2771797_epffkp530xh.svg?t=1679577166002#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/c/font_2771797_ty176ga25v.woff2?t=1680064220428') format('woff2'),
+       url('//at.alicdn.com/t/c/font_2771797_ty176ga25v.woff?t=1680064220428') format('woff'),
+       url('//at.alicdn.com/t/c/font_2771797_ty176ga25v.ttf?t=1680064220428') format('truetype'),
+       url('//at.alicdn.com/t/c/font_2771797_ty176ga25v.svg?t=1680064220428#iconfont') format('svg');
 }
 
 .iconfont {
@@ -12,6 +12,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dir_outline:before {
+  content: "\e60d";
 }
 
 .icon-more-outline:before {

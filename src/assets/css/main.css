@@ -2,12 +2,19 @@
 @import '../iconfont/index.css';
 @import './dark.css';
 @import './light.css';
+@import './global.css';
 #app {
   height: 100%;
 }
 .center {
   max-width: 1280px !important;
   margin: 0 auto;
+}
+
+#app>div {
+  margin-top: 60px;
+  background-color: var(--color-background-main);
+  min-height: calc(100vh - 140px);
 }
 
 @media screen and (max-width: 374px){
