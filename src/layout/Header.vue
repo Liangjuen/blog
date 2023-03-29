@@ -16,7 +16,10 @@
                 </span>
                 <div class="links">
                     <nav>
-                        <router-link v-for="item in navList" :to="item.path" class="link-item">{{ item.title }}</router-link>
+                        <router-link v-for="item in navList" :to="item.path" class="link-item">
+                            <i class="iconfont" :class="item.icon"></i>
+                            {{ item.title }}
+                        </router-link>
                     </nav>
                 </div>
                 <span class="icon-box" @click="openRightScreen">
@@ -112,6 +115,9 @@ header {
 
 .link-item {
     margin-left: 1.4rem;
+}
+.link-item .iconfont {
+    margin-right: 3px;
 }
 
 .icon-box {

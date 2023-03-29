@@ -11,7 +11,7 @@
                             :to="item.path" 
                             class="nav-item" 
                             @click="close"
-                        >
+                        >   <i class="iconfont" :class="item.icon"></i>
                             {{ item.title }}
                         </router-link>
                     </nav>
