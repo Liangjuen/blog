@@ -1,16 +1,15 @@
 <template>
     <div class="home-page-container">
-        <!-- <Hero/> -->
+        <Hero/>
         <div class="main-content center">
-            <div class="content-item" v-for="item in 7">
-                <img class="cover-box" src="../../assets/image/p.jpg" />
+            <div class="content-item">
+                <div class="cover-box"><img  src="../../assets/image/p.jpg" /></div>
                 <div class="title">
-                    <h3>Edge浏览器已经开始下载，浏览卡萨丁金阿奎浏览历史打开的，大手大脚</h3>
+                    <router-link to="/article" class="link">Edge浏览器已经开始下载，浏览卡萨丁金阿奎浏览历史打开的，大手大脚</router-link>
                     <div class="Abstract">关电视就的撒肯德基加快速度洒咖啡，大手大脚，大健康大量较大时刻的接口深刻的拉升看到啦</div>
                     <div class="bottom-box">
                         <div class="tag-box">
-                            <span><i class="tag-item"></i>技巧</span>
-                            <span><i class="tag-item"></i>技巧</span>
+                            <router-link to="/tags"><i class="tag-item"></i>技巧</router-link>
                         </div>
                         <span>2023-3-24</span>
                     </div>
@@ -50,28 +49,27 @@ const handelCurrentPageChange = (num:number) => {
 .main-content {
     display: flex;
     flex-flow: row wrap;
-    padding: 15px;
+    /* padding: 15px; */
+    justify-content: space-between;
 }
 
 .content-item {
+    position: relative;
     border-radius: 8px;
     background-color: var(--color-text-background);
-    margin-bottom: 15px;
+    margin: 15px 15px 0 15px;
     transition: all .4s;
     display: flex;
     border: 1px solid var(--color-background-mute);
     overflow: hidden;
     flex-flow: row wrap;
-    cursor: pointer;
-    overflow: hidden;
 }
-
 
 .content-item:hover {
     box-shadow: var(--box-shadow);
     transform: scale(1.01)
 }
-.content-item:hover .title h3 {
+.content-item .title .link:hover  {
     color: var(--color-border-hover);
 }
 .title {
@@ -86,11 +84,11 @@ const handelCurrentPageChange = (num:number) => {
     box-sizing: border-box;
     overflow: hidden;
 }
-.title h3 {
+.title .link {
     font-size: 1.2rem;
     font-weight: bold;
 }
-.title h3, .Abstract {
+.title .link, .Abstract {
     overflow: hidden; 
     text-overflow: ellipsis;
     display: -webkit-box; 
@@ -113,10 +111,10 @@ const handelCurrentPageChange = (num:number) => {
     width: 100%;
 }
 
-.tag-box > span {
+.tag-box > a {
     margin-right: 1rem;
 }
-.tag-box > span:hover {
+.tag-box > a:hover {
     color: var(--color-border-hover);
 }
 .tag-item {
@@ -144,9 +142,6 @@ const handelCurrentPageChange = (num:number) => {
     .cover-box {
         width: 100%;
     }
-    .content-item:nth-child(2n +1) {
-        margin-right: 0;
-    }
 }
 
 @media screen and (min-width: 751px) and (max-width: 1080px) {
@@ -160,22 +155,24 @@ const handelCurrentPageChange = (num:number) => {
     .cover-box {
         width: 45%;
     }
-    .content-item:nth-child(2n +1) {
-        margin-right: 0;
-    }
 }
 
 @media screen and (min-width: 1081px) {
+    .main-content {
+        justify-content: center;
+    }
     .content-item  {
-        flex: 1 0 30rem;
+        flex: 1 0 420px;
         height: 25rem;
-        max-width: 48%;
     }
     .cover-box {
         width: 100%;
     }
+    .content-item:last-child {
+        max-width: calc(50% - 15px);
+    }
     .content-item:nth-child(2n +1) {
-        margin-right: 15px;
+        margin-right: 0;
     }
 }
 

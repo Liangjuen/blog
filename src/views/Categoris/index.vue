@@ -1,17 +1,11 @@
 <template>
-    <div class="article-page-container">
-        <PageHeader/>
-        <div class="articl"></div>
+    <div class="categoris-page-container">
+        <div class="center">
+            <AllCategoris/>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import PageHeader from '../../components/PageHeader.vue'
+import AllCategoris from '../../components/AllCategoris.vue'
 </script>
-
-<style scoped>
-.articl {
-    height: 600px;
-    padding: 15px;
-}
-</style>
