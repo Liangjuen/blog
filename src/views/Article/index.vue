@@ -1,7 +1,7 @@
 <template>
     <div class="article-page-container">
         <PageHeader/>
-        <div class="articl"></div>
+        <section class="articl center">article</section>
     </div>
 </template>
 
@@ -12,5 +12,6 @@ import PageHeader from '../../components/PageHeader.vue'
 <style scoped>
 .articl {
     height: 600px;
+    padding: 15px;
 }
 </style>

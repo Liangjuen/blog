@@ -12,5 +12,6 @@ import PageHeader from '../../components/PageHeader.vue'
 <style scoped>
 .articl {
     height: 600px;
+    padding: 15px;
 }
 </style>

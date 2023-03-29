@@ -68,7 +68,8 @@ const handelCurrentPageChange = (num:number) => {
 
 
 .content-item:hover {
-    border: 1px solid var(--color-border-hover);
+    box-shadow: var(--box-shadow);
+    transform: scale(1.01)
 }
 .content-item:hover .title h3 {
     color: var(--color-border-hover);
@@ -87,6 +88,7 @@ const handelCurrentPageChange = (num:number) => {
 }
 .title h3 {
     font-size: 1.2rem;
+    font-weight: bold;
 }
 .title h3, .Abstract {
     overflow: hidden; 
