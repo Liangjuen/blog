@@ -9,7 +9,7 @@ declare namespace API {
         id: number
     }
     
-    type Article = {
+    interface Article {
         title: string, 
         cover: string, 
         id: number, 
@@ -18,7 +18,7 @@ declare namespace API {
         [propName:string]:any
     }
 
-    export type ArticleData = {
+    interface ArticleData {
         list: Article[]
         offset: number
         pageSize: number
