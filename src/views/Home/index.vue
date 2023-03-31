@@ -1,23 +1,23 @@
 <template>
     <div class="home-page-container">
-        <Hero/>
+        <!-- <Hero/> -->
         <div class="main-content center">
-            <div class="content-item">
-                <div class="cover-box"><img  src="../../assets/image/p.jpg" /></div>
+            <div class="content-item" v-for="item in state.list" :key="item.id">
+                <div class="cover-box"><img  :src="item.cover" /></div>
                 <div class="title">
-                    <router-link to="/article" class="link">Edge浏览器已经开始下载，浏览卡萨丁金阿奎浏览历史打开的，大手大脚</router-link>
-                    <div class="Abstract">关电视就的撒肯德基加快速度洒咖啡，大手大脚，大健康大量较大时刻的接口深刻的拉升看到啦</div>
+                    <RouterLink to="/article" class="link">{{ item.title }}</RouterLink>
+                    <div class="Abstract">{{ item.summary }}</div>
                     <div class="bottom-box">
                         <div class="tag-box">
-                            <router-link to="/tags"><i class="tag-item"></i>技巧</router-link>
+                            <RouterLink to="/tags"><i class="tag-item"></i>技巧</RouterLink>
                         </div>
-                        <span>2023-3-24</span>
-                    </div>
+                        <span>{{ item.create_time }}</span>
+                    </div>  
                 </div>
             </div>
         </div>
         <Pagination 
-            :total="21" 
+            :total="state.total" 
             v-model:current-page="currentPage" 
             @next-click="handelNextClcik" 
             @prev-click="handelPrevClick" 
@@ -27,10 +27,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import Hero from './Hero.vue'
 import Pagination from '../../components/Pagination.vue'
+import API from '@/network/api/index'
 let currentPage = ref<number>(1)
+let state = reactive<API.ArticleData>({
+    list: [],
+    pageSize: 4,
+    offset: 0,
+    total: 0
+})
+// 获取文章列表
+const getArtList = async () => {
+    const {list, offset, pageSize, total}  = await API.getArticleList({ pageSize: 4, offset:0 })
+    state.list = list
+    state.offset = offset
+    state.pageSize = pageSize
+    state.total = total
+}
+onMounted(() => {
+    getArtList()
+})
 let handelPrevClick = (num:number) => {
     // ...
     currentPage.value  = num
