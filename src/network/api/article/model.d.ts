@@ -24,5 +24,16 @@ declare namespace API {
         pageSize: number
         total: number
     }
+
+    interface ArticleContent {
+        id: number,
+        article_id: number,
+        content_md: string,
+        content_html: string
+    }
+
+    interface GetArticleContent {
+        id: number
+    }
 }
 

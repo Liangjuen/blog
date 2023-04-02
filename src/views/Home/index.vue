@@ -1,65 +1,75 @@
 <template>
     <div class="home-page-container">
-        <!-- <Hero/> -->
-        <div class="main-content center">
-            <div class="content-item" v-for="item in state.list" :key="item.id">
+        <div class="main-content center" id="article">
+            <div class="content-item" v-for="item in state.list" :key="item.id" @click="readMore(item)">
                 <div class="cover-box"><img  :src="item.cover" /></div>
                 <div class="title">
-                    <RouterLink to="/article" class="link">{{ item.title }}</RouterLink>
+                    <span class="link">{{ item.title }}</span>
                     <div class="Abstract">{{ item.summary }}</div>
                     <div class="bottom-box">
                         <div class="tag-box">
                             <RouterLink to="/tags"><i class="tag-item"></i>技巧</RouterLink>
                         </div>
-                        <span>{{ item.create_time }}</span>
+                        <span>{{ format(item.create_time,'YYYY-MM-DD') }}</span>
                     </div>  
                 </div>
             </div>
         </div>
         <Pagination 
-            :total="state.total" 
+            :pagerCount="pageCount" 
             v-model:current-page="currentPage" 
-            @next-click="handelNextClcik" 
-            @prev-click="handelPrevClick" 
-            @current-change="handelCurrentPageChange"
+            @next-click="handelPageChange" 
+            @prev-click="handelPageChange" 
+            @current-change="handelPageChange"
         />
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
-import Hero from './Hero.vue'
+import { ref, onMounted, reactive, computed, toRefs } from 'vue'
 import Pagination from '../../components/Pagination.vue'
 import API from '@/network/api/index'
-let currentPage = ref<number>(1)
+import { format } from '@/hooks/dateFormat'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+let currentPage = computed({
+    get(){
+        return state.offset + 1
+    },
+    set(val:number){
+        state.offset = val - 1
+    }
+})
 let state = reactive<API.ArticleData>({
     list: [],
-    pageSize: 4,
+    pageSize: 8,
     offset: 0,
     total: 0
 })
+let baseHref = computed(()=> document.location.href.split('#article')[0])
+let pageCount = computed(()=> state.total % state.pageSize == 0? state.total / state.pageSize : Math.floor(state.total / state.pageSize) + 1)
 // 获取文章列表
 const getArtList = async () => {
-    const {list, offset, pageSize, total}  = await API.getArticleList({ pageSize: 4, offset:0 })
+    const {list, offset, total}  = await API.getArticleList({ pageSize: state.pageSize, offset:state.offset })
     state.list = list
     state.offset = offset
-    state.pageSize = pageSize
     state.total = total
+}
+
+const readMore = (item:API.Article) => {
+    router.push({
+        name: 'Article',
+        params: { id: item.id }
+    })
 }
 onMounted(() => {
     getArtList()
 })
-let handelPrevClick = (num:number) => {
-    // ...
-    currentPage.value  = num
-}
-const handelNextClcik = (num:number) => {
-    // ...
-    currentPage.value  = num
-}
-const handelCurrentPageChange = (num:number) => {
-    // ...
-    currentPage.value  = num
+
+let handelPageChange = (num:number) => {
+    currentPage.value = num
+    getArtList()
+    document.location.href = baseHref.value + '#article'
 }
 </script>
 
@@ -67,7 +77,6 @@ const handelCurrentPageChange = (num:number) => {
 .main-content {
     display: flex;
     flex-flow: row wrap;
-    /* padding: 15px; */
     justify-content: space-between;
 }
 
@@ -80,14 +89,15 @@ const handelCurrentPageChange = (num:number) => {
     display: flex;
     border: 1px solid var(--color-background-mute);
     overflow: hidden;
-    flex-flow: row wrap;
+    cursor: pointer;
 }
 
 .content-item:hover {
     box-shadow: var(--box-shadow);
     transform: scale(1.01)
 }
-.content-item .title .link:hover  {
+
+.content-item .tag-box a:hover  {
     color: var(--color-border-hover);
 }
 .title {
@@ -116,6 +126,7 @@ const handelCurrentPageChange = (num:number) => {
 .Abstract {
     font-size: 1rem;
     color: var(--color-text-2);
+    line-height: 1.2rem;
 }
 .cover-box {
     min-width: 200px;
@@ -132,9 +143,6 @@ const handelCurrentPageChange = (num:number) => {
 .tag-box > a {
     margin-right: 1rem;
 }
-.tag-box > a:hover {
-    color: var(--color-border-hover);
-}
 .tag-item {
     margin-right: 1rem;
     position: relative;
@@ -150,19 +158,20 @@ const handelCurrentPageChange = (num:number) => {
     font-size: 1rem;
     margin-right: 2px;
 }
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 700px) {
     .main-content {
         flex-direction: column;
     }
     .content-item  {
-        height: 25rem;
+        height: 22rem;
+        flex-flow: row wrap;
     }
     .cover-box {
         width: 100%;
     }
 }
 
-@media screen and (min-width: 751px) and (max-width: 1080px) {
+@media screen and (min-width: 700px) and (max-width: 1080px) {
     .main-content {
         flex-direction: column;
     }
@@ -175,19 +184,18 @@ const handelCurrentPageChange = (num:number) => {
     }
 }
 
-@media screen and (min-width: 1081px) {
+@media screen and (min-width: 1080px) {
     .main-content {
         justify-content: center;
     }
     .content-item  {
-        flex: 1 0 420px;
-        height: 25rem;
+        width: 500px;
+        max-width: 560px;
+        height: 22rem;
+        flex-flow: row wrap;
     }
     .cover-box {
         width: 100%;
-    }
-    .content-item:last-child {
-        max-width: calc(50% - 15px);
     }
     .content-item:nth-child(2n +1) {
         margin-right: 0;

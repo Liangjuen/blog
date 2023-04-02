@@ -1,12 +1,12 @@
 <template>
     <Header/>
-    <div>
+    <main>
         <router-view v-slot="{ Component }">
             <transition name="view-move" mode="out-in" appear>
                 <component :is="Component" />
             </transition>
         </router-view>
-    </div>
+    </main>
     <GoTop/>
     <Footer/>
 </template>

@@ -11,7 +11,7 @@
   margin: 0 auto;
 }
 
-#app>div {
+#app>main {
   margin-top: 60px;
   background-color: var(--color-background-main);
   min-height: calc(100vh - 140px);

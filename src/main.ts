@@ -4,7 +4,7 @@ import piniaPlugin from 'pinia-plugin-lasting'
 import App from './App.vue'
 import router from './router'
 import mountDirective from './directive/index'
-
+import 'highlight.js/styles/atom-one-dark.css' //样式
 import './assets/css/main.css'
 
 const store = createPinia()
@@ -15,7 +15,6 @@ const app = createApp(App)
 store.use(piniaPlugin)
 // 挂载全局自定义指令
 mountDirective(app)
-
 app.use(store)
 
 app.use(router)

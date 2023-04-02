@@ -104,7 +104,7 @@ header {
 .btn-container, .links, .links {
     display: flex;
 }
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 700px) {
     .myself, .icon-theme, .links {
         display: none;
     }

@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+
 <template>
     <div class="gotop-box">
         <transition name="move" mode="out-in" appear>

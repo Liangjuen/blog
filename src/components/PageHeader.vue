@@ -234,7 +234,7 @@ section {
     --speed: 38;
     --opacity: 1;
     --height: 6;
-    --width: 380;
+    --width: 520;
     --lightness: 100;
     --rise: 2;
     --index: 1000;
@@ -245,7 +245,7 @@ section {
     --speed: 32;
     --opacity: 0.6;
     --height: 6;
-    --width: 380;
+    --width: 520;
     --lightness: 95;
     --rise: 3;
     --index: 999;
@@ -256,7 +256,7 @@ section {
     --speed: 34;
     --opacity: 0.6;
     --height: 8;
-    --width: 380;
+    --width: 500;
     --lightness: 90;
     --rise: 5;
     --index: 998;
@@ -267,7 +267,7 @@ section {
     --speed: 36;
     --opacity: 0.6;
     --height: 10;
-    --width: 380;
+    --width: 500;
     --lightness: 85;
     --rise: 7;
     --index: 997;
@@ -276,14 +276,14 @@ section {
 
 @media (max-width: 480px) {
     .wave {
-        height: calc(var(--height, 0) * 0.75vh);
+        height: calc(var(--height, 0) * 0.7vh);
     }
 }
 
 .wave path {
     opacity: var(--opacity) !important;
     fill: var(--color-background-main);
-    -webkit-animation: wave calc(var(--speed, 0) * 1s) infinite linear;
+    -webkit-animation: wave calc(var(--speed, 0) * 1.2s) infinite linear;
     animation: wave calc(var(--speed, 0) * 1s) infinite linear;
     animation-delay: calc(var(--delay * 1s));
 }
