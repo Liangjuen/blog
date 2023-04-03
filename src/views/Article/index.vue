@@ -74,6 +74,8 @@ article {
 }
 article pre code {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 article a {

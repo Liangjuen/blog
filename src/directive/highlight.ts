@@ -20,7 +20,8 @@ hljs.registerLanguage('html', html)
 
 //创建v-highlight全局指令
 export default (el:Element) => {
-    let mdContent = el.innerHTML
+    let mdContent = el.textContent
+    
     // 配置主题(暂时只考虑使用深色)的类名
     el.className = `markdown-body ${'hljs-atom-one-light'}`
 
@@ -29,8 +30,6 @@ export default (el:Element) => {
         highlight: function (str, lang) {
             let langIcon = `<i class="lang">${lang}</i>`
             if (lang && hljs.getLanguage(lang) || lang == 'template') {
-                console.log(lang);
-                
                 lang = (lang == 'template'? 'html' : lang)
               try {
                 return '<div>'+ langIcon +'<pre class="hljs"><code>' + 
