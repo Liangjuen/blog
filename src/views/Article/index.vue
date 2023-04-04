@@ -4,7 +4,7 @@
         <section class="articl center" id="more">
             <div class="article-main">
                 <p class="summary"></p>
-                <article v-html="str" v-highLight></article>
+                <article v-html="html" :class="`markdown-body ${'hljs-atom-one-light'}`"></article>
             </div>
             <aside class="article-right">
                 <Card>
@@ -13,10 +13,14 @@
                         <span>目录</span>
                     </template>
                     <template #content>
-                        <div class="direc-item">
-                            <h3 class="title">基础</h3>
-                            <a class="link active" href="#深入响应式">深入响应式</a>
-                        </div>
+                        <ul class="direc-item">
+                            <li 
+                                @click.prevent="handleNavClick(item.slug)"
+                                v-for="item in state.docs" class="link" 
+                                :href="'#'+ item.slug">
+                                {{ item.title }}
+                            </li>
+                        </ul>
                     </template>
                 </Card>
             </aside>
@@ -28,15 +32,27 @@
 import PageHeader from '../../components/PageHeader.vue'
 import Card from '../../components/Card.vue'
 import { useRoute } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed, reactive } from 'vue'
+import useMarkdownIt from '@/hooks/markdownIt'
 import API from '@/network/api/index'
-const route = useRoute()
 
-let str = ref<string>('')
+const route = useRoute()
+let state = reactive<{
+    docs: {title: string, slug: string}[]
+}>({
+    docs: []
+})
+let html = ref<string>('')
 
 const getArticleContentByArtId = async () => {
     const data = await API.getArticleDetailByArtId({ id: Number(route.params.id) })
-    str.value = data.content_md
+    const { htmlStr,docs } = useMarkdownIt(data.content_md)
+    html.value = htmlStr
+    state.docs = docs
+}
+const handleNavClick = (idName: string) => {
+    let h = document.getElementById(idName)
+    h?.scrollIntoView({ behavior: 'smooth' })
 }
 onMounted(()=> {
     getArticleContentByArtId()
@@ -72,10 +88,21 @@ article {
     overflow-x: auto !important;
     padding: 1.2rem;
 }
+article p code {
+    background-color: var(--color-background-mute);
+    padding: 0.15em 0.5em;
+    border-radius: 4px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
+}
 article pre code {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.4;
+    /* font-size: 14px; */
+}
+
+article h2, h3 {
+    margin: 2rem 0 0 4px;
 }
 
 article a {
@@ -89,22 +116,26 @@ article a:hover {
 article pre .lang {
     line-height: 1rem;
     position: absolute;
-    top: 8px;
+    top: 4px;
     right: 8px;
     color: var(--vt-c-text-dark-2);
     z-index: 3;
     cursor: default;
     opacity: 0.6;
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .article-right {
     width: 15rem;
     margin-left: 15px;
-    min-width: 200px;
+    min-width: 240px;
 }
 .article-right .card {
     position: sticky;
     top: 75px;
+    max-height: 640px;
+    overflow-y: auto;
 }
 .article-right .card .iconfont {
     font-size: 1.2rem;
@@ -123,6 +154,8 @@ article pre .lang {
 }
 .direc-item .link {
     padding: 2px 0;
+    font-size: 14px;
+    cursor: pointer;
 }
 .direc-item .link:hover, .direc-item .active {
     color: var(--color-active);
