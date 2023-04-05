@@ -6,7 +6,7 @@ declare namespace API {
 
     interface GetArticlesByTypeId extends GetArticleList {
         type: 'cate' | 'tag', 
-        id: number
+        id: number | string
     }
     
     interface Article {

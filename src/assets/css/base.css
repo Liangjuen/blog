@@ -52,6 +52,7 @@ html {
 a {
   text-decoration: none;
 }
+
 body {
   color: var(--color-text);
   transition: color 0.4s, background-color 0.3s;

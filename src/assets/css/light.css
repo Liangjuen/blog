@@ -7,7 +7,7 @@ html[theme='light'] {
     --color-border-hover: var(--color-border-hover-light);
     --color-active: var(--color-border-hover);
     --color-avtive-text: var(--vt-c-white);
-    --box-shadow: 0 6px 10px 0 rgba(0,0,0,0.1);
+    --box-shadow: 0 10px 20px 0 rgba(0,0,0,0.1);
 
     --color-heading: var(--vt-c-text-light-1);
     --color-text: var(--vt-c-text-light-1);

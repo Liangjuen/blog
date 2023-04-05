@@ -11,6 +11,8 @@ export const useIndexStore = defineStore(Names.INDEX, {
     },
     lasting: {
       enabled: true,
-      strategies: {}
+      strategies: {
+        storage: localStorage
+      }
     }
 })

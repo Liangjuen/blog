@@ -1,6 +1,6 @@
 <template>
     <div class="article-page-container">
-        <PageHeader/>
+        <PageHeader  />
         <section class="articl center" id="more">
             <div class="article-main">
                 <p class="summary"></p>
@@ -31,12 +31,14 @@
 <script setup lang="ts">
 import PageHeader from '../../components/PageHeader.vue'
 import Card from '../../components/Card.vue'
+import { useArticleStore } from '@/stores/article'
 import { useRoute } from 'vue-router'
-import { onMounted, ref, computed, reactive } from 'vue'
+import { onMounted, ref, computed, reactive, toRefs } from 'vue'
 import useMarkdownIt from '@/hooks/markdownIt'
 import API from '@/network/api/index'
 
 const route = useRoute()
+const articleStroe = useArticleStore()
 let state = reactive<{
     docs: {title: string, slug: string}[]
 }>({
@@ -50,6 +52,7 @@ const getArticleContentByArtId = async () => {
     html.value = htmlStr
     state.docs = docs
 }
+
 const handleNavClick = (idName: string) => {
     let h = document.getElementById(idName)
     h?.scrollIntoView({ behavior: 'smooth' })
@@ -72,6 +75,7 @@ onMounted(()=> {
     border-radius: 10px;   
     flex-direction: column;
     min-width: 0;
+    box-shadow: var(--box-shadow);
 }
 .summary {
     padding: 15px;
@@ -106,7 +110,7 @@ article h2, h3 {
 }
 
 article a {
-    transition: all 0.3s;
+    transition: color 0.4s, text-decoration 0.3s ;
     color: var(--color-active);
 }
 article a:hover {

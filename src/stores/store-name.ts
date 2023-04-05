@@ -1,3 +1,4 @@
 export const enum Names {
-    INDEX = 'INDEX'
+    INDEX = 'INDEX',
+    ARTICLE = 'ARTICLE'
 }

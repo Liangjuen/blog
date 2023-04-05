@@ -4,25 +4,24 @@
             <div class="article-att">
                 <div class="categoris">
                     <router-link to="/" class="category-item">原创</router-link>
-
                 </div>
                 <div class="tags">
-                    <router-link to="/" class="tag-item">科技</router-link>
+                    <router-link to="/tags" class="tag-item" v-for="item in tags" >{{ item.name }}</router-link>
                 </div>
             </div>
-            <div class="article-title">使用竹白作为你的博客更新邮件订阅服务提供商，如何让博客支持邮件订阅。</div>
+            <div class="article-title">{{ article.title }}</div>
             <div class="article-about">
                 <div>
                     <i class="iconfont icon-date"></i>
-                    <span class="text">2023-3-21</span>
+                    <span class="text">{{ format(article.create_time, 'YYYY-MM-DD') }}</span>
                 </div>
                 <div>
                     <i class="iconfont icon-time"></i>
-                    <span class="text">1分钟</span>
+                    <span class="text">5分钟</span>
                 </div>
                 <div>
                     <i class="iconfont icon-comment"></i>
-                    <span class="text">19</span>
+                    <span class="text">{{  article.read_count || 199  }}</span>
                 </div>
             </div>
         </div>
@@ -43,12 +42,16 @@
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue';
-    let getRandomInt = (max:number) => {
-            return Math.floor(Math.random() * max)
-        }
+    import { computed } from 'vue'
+    import { useArticleStore } from '@/stores/article'
+    import { format } from '@/hooks/dateFormat'
+    const articleStore = useArticleStore()
 
+    let article = computed((): API.Article => articleStore.article)
+    let getRandomInt = (max:number) => Math.floor(Math.random() * max)
     let theme = computed(()=> `theme${(getRandomInt(4) + 1)}`)
+    let tags = computed(()=> articleStore.tags)
+
 </script>
 
 <style scoped>
@@ -135,10 +138,9 @@
     border-radius: 8px;
     margin-right: 1rem;
     font-weight: 600;
-    transition: all 0.3s;
-    backdrop-filter: blur(20px);
+    transition: color 0.4s, backgorund-color 0.3s;
     letter-spacing: 0.5rem;
-    box-shadow: 0 0 30px 10px rgba(0,0,0,0.1);
+    box-shadow: var(--box-shadow);
 
 }
 .category-item:hover {
@@ -157,7 +159,7 @@
 .tag-item::before {
     position: absolute;
     top: 0.7rem;
-    left: -50%;
+    left: -1rem;
     transform: translateY(-50%);
     content: '#';
     font-weight: 600;

@@ -31,3 +31,9 @@ withDefaults(defineProps<{
 })
 
 </script>
+
+<style scoped>
+.card {
+    box-shadow: 0 0 0;
+}
+</style>

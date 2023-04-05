@@ -58,7 +58,6 @@ header {
     top: 0;
     left: 0;
     z-index: 100;
-    border-bottom: 1px solid var(--color-background-mute);
 }
 .header-inner {
     height: 100%;
@@ -70,16 +69,16 @@ header {
 .header-inner .iconfont {
     font-size: 18px;
 }
-.header-inner span {
-    transition: color 0.3s, top .25s, transform .25s;
+.header-inner span, .link-item {
+    transition: color 0.4s, top .25s, transform .25s;
 }
 .header-inner span:hover,
+.header-inner a .icon-home:hover,
 .link-item:hover {
-    color: var(--color-border-hover);
+    color: var(--color-border-hover) ;
 }
 .to-home {
     color: var(--color-text);
-    transition: all .3s;
     font-weight: 600;
     overflow: hidden;
 }
@@ -93,7 +92,6 @@ header {
     position: relative;
     cursor: pointer;
     font-size: 18px !important;
-    transition: all .3s;
     margin-left: 1rem;
 }
 

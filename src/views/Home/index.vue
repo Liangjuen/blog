@@ -8,7 +8,12 @@
                     <div class="Abstract">{{ item.summary }}</div>
                     <div class="bottom-box">
                         <div class="tag-box">
-                            <RouterLink to="/tags"><i class="tag-item"></i>技巧</RouterLink>
+                            <a 
+                                @click.stop="router.push({ path:'/tags'})" 
+                                v-for="tagId in item.tags">
+                                <i class="tag-item"></i>
+                                {{ findTag(tagId) }}
+                            </a>
                         </div>
                         <span>{{ format(item.create_time,'YYYY-MM-DD') }}</span>
                     </div>  
@@ -26,12 +31,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive, computed, toRefs } from 'vue'
+import { onMounted, reactive, computed } from 'vue'
 import Pagination from '../../components/Pagination.vue'
+import { useArticleStore } from '@/stores/article'
 import API from '@/network/api/index'
 import { format } from '@/hooks/dateFormat'
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
+const articleStore = useArticleStore()
 let currentPage = computed({
     get(){
         return state.offset + 1
@@ -40,37 +48,57 @@ let currentPage = computed({
         state.offset = val - 1
     }
 })
-let state = reactive<API.ArticleData>({
+interface State extends API.ArticleData {
+    tags: API.TagList
+}
+
+let state = reactive<State>({
     list: [],
     pageSize: 8,
     offset: 0,
-    total: 0
+    total: 0,
+    tags: []
 })
 let baseHref = computed(()=> document.location.href.split('#article')[0])
 let pageCount = computed(()=> state.total % state.pageSize == 0? state.total / state.pageSize : Math.floor(state.total / state.pageSize) + 1)
+
 // 获取文章列表
 const getArtList = async () => {
     const {list, offset, total}  = await API.getArticleList({ pageSize: state.pageSize, offset:state.offset })
-    state.list = list
+    state.list = list.map(i=> {
+        i.tags = i.tags.split(',').map((n:string) => Number(n))
+        return i
+    })
     state.offset = offset
     state.total = total
 }
 
+// 获取标签列表
+const getTags = () => {
+    articleStore.getTags()
+    state.tags = articleStore.tags
+}
+
+const findTag = (tagId:number) => state.tags.find(item => item.id == tagId)?.name
+
 const readMore = (item:API.Article) => {
+    articleStore.setArticle(item)
     router.push({
         name: 'Article',
         params: { id: item.id }
     })
 }
-onMounted(() => {
-    getArtList()
-})
 
-let handelPageChange = (num:number) => {
+const handelPageChange = (num:number) => {
     currentPage.value = num
     getArtList()
     document.location.href = baseHref.value + '#article'
 }
+
+onMounted(() => {
+    getTags()
+    getArtList()
+})
 </script>
 
 <style scoped>
@@ -82,19 +110,20 @@ let handelPageChange = (num:number) => {
 
 .content-item {
     position: relative;
-    border-radius: 8px;
+    border-radius: 20px;
     background-color: var(--color-text-background);
-    margin: 15px 15px 0 15px;
-    transition: all .4s;
+    margin: 20px 15px 0 15px;
+    transition: box-shadow .4s, transform .2s ease-in;
     display: flex;
     border: 1px solid var(--color-background-mute);
     overflow: hidden;
     cursor: pointer;
+    animation: artitem 2s;
 }
 
 .content-item:hover {
     box-shadow: var(--box-shadow);
-    transform: scale(1.01)
+    transform: translateY(-5px);
 }
 
 .content-item .tag-box a:hover  {
@@ -103,7 +132,6 @@ let handelPageChange = (num:number) => {
 .title {
     flex: 1 0 200px;
     padding: 15px;
-    transition: color 0.3s;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -202,5 +230,15 @@ let handelPageChange = (num:number) => {
     }
 }
 
+@keyframes artitem {
+    0% {
+        transform: translateY(4px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
 </style>

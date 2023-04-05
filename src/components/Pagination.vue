@@ -79,7 +79,7 @@ const checkLast = () => {
         text-align: center;
         border-radius: 50%;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: color .3s, backgorund-color .3s, box-shadow .2s, transform .3s;
     }
     .page-size {
         margin: 0 0.5rem;
@@ -87,7 +87,7 @@ const checkLast = () => {
     .btn:hover, .page-size:hover, .iconfont:hover {
         color: var(--color-avtive-text);
         background-color: var(--color-active);
-        transform: scale(0.85);
+        transform: scale(1.1);
         box-shadow: var(--box-shadow);
     }
     .current {
