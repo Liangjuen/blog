@@ -1,11 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home/index.vue'
 import Index from '../views/Index.vue'
-import NotFound from '../views/404.vue'
-import Article from '../views/Article/index.vue'
-import ArticleList from '../views/ArticleList/index.vue'
-import Categoris from '../views/Categoris/index.vue'
-import Tags from '../views/Tags/index.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -18,33 +13,33 @@ const router = createRouter({
         {
           path:'/',
           name: 'Home',
-          component: Home
+          component: import('../views/Home/index.vue')
         },
         {
-          path: '/article/:id/',
+          path: '/article/:id',
           name: 'Article',
-          component: Article
+          component: import('../views/Article/index.vue')
         },
         {
           path: '/articleList',
           name: 'ArticleList',
-          component: ArticleList
+          component: import('../views/ArticleList/index.vue')
         },
         {
           path: '/categoris',
           name: 'Categoris',
-          component: Categoris
+          component: import('../views/Categoris/index.vue')
         },
         {
           path: '/tags',
           name: 'Tags',
-          component: Tags
+          component: import('../views/Tags/index.vue')
         }
       ]
     },
     {
       path: '/404',
-      component: NotFound
+      component: import('../views/404.vue')
     }
   ]
 })

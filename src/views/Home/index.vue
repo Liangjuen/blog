@@ -1,5 +1,6 @@
 <template>
     <div class="home-page-container">
+        <Hero/>
         <div class="main-content center" id="article">
             <div class="content-item" v-for="item in state.list" :key="item.id" @click="readMore(item)">
                 <div class="cover-box"><img  :src="item.cover" /></div>
@@ -31,6 +32,7 @@
 </template>
 
 <script setup lang="ts">
+import Hero from './Hero.vue'
 import { onMounted, reactive, computed } from 'vue'
 import Pagination from '../../components/Pagination.vue'
 import { useArticleStore } from '@/stores/article'
@@ -103,6 +105,7 @@ onMounted(() => {
 
 <style scoped>
 .main-content {
+    margin-top: 74px;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -118,7 +121,7 @@ onMounted(() => {
     border: 1px solid var(--color-background-mute);
     overflow: hidden;
     cursor: pointer;
-    animation: artitem 2s;
+    animation: artitem 1.4s;
 }
 
 .content-item:hover {

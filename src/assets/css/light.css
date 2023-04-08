@@ -16,6 +16,6 @@ html[theme='light'] {
     --section-gap: 160px;
 
     --color-background-main: var(--vt-c-white-soft);
-    --color-text-background: var(--vt-c-white)
+    --color-text-background: var(--vt-c-white);
 
 }

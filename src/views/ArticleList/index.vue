@@ -1,16 +1,14 @@
 <template>
-    <div class="article-page-container">
-        <PageHeader/>
+    <div class="article-list-page-container">
+        <AllTags/>
         <div class="articl"></div>
     </div>
 </template>
 
 <script setup lang="ts">
-import PageHeader from '../../components/PageHeader.vue'
+import AllTags from '../../components/AllTags.vue'
 </script>
 
 <style scoped>
-.articl {
-    height: 600px;
-}
+
 </style>

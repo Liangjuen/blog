@@ -3,11 +3,11 @@
         <PageHeader  />
         <section class="articl center" id="more">
             <div class="article-main">
-                <p class="summary"></p>
+                <p class="summary">{{ summary }}</p>
                 <article v-html="html" :class="`markdown-body ${'hljs-atom-one-light'}`"></article>
             </div>
             <aside class="article-right">
-                <Card>
+                <Card v-if="state.docs.length">
                     <template #title>
                         <i class="iconfont icon-dir_outline"></i>
                         <span>目录</span>
@@ -52,7 +52,7 @@ const getArticleContentByArtId = async () => {
     html.value = htmlStr
     state.docs = docs
 }
-
+let summary = computed(()=> articleStroe.article.summary)
 const handleNavClick = (idName: string) => {
     let h = document.getElementById(idName)
     h?.scrollIntoView({ behavior: 'smooth' })
@@ -64,6 +64,18 @@ onMounted(()=> {
 </script>
 
 <style>
+.article-main ul li, ol li {
+    transform: translateX(1rem);
+}
+.article-main ul li::marker, ol li::marker {
+    color: var(--color-active);
+}
+.article-main ul li {
+    list-style-type: decimal;
+}
+.article-main ol li {
+    list-style-type: square;
+}
 .articl {
     padding: 15px;
     display: -webkit-box;
@@ -78,6 +90,7 @@ onMounted(()=> {
     box-shadow: var(--box-shadow);
 }
 .summary {
+    text-indent: 2rem;
     padding: 15px;
     border-bottom: 2px dashed var(--color-border);
 }
@@ -102,11 +115,10 @@ article p code {
 article pre code {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     line-height: 1.4;
-    /* font-size: 14px; */
 }
 
 article h2, h3 {
-    margin: 2rem 0 0 4px;
+    margin: 2rem 0 6px 0;
 }
 
 article a {
@@ -130,10 +142,12 @@ article pre .lang {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.article-right {
-    width: 15rem;
-    margin-left: 15px;
+.article-right .card {
     min-width: 240px;
+}
+
+.article-right {
+    margin-left: 15px;
 }
 .article-right .card {
     position: sticky;

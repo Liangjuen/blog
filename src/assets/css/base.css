@@ -84,7 +84,7 @@ a {
   color: var(--color-text);
 }
 
-ul li {
+li {
   list-style: none;
 }
 
