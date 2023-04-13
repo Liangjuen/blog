@@ -11,46 +11,46 @@ const router = createRouter({
       redirect: '/home',
       children: [
         {
-          path:'/',
+          path: '/',
           name: 'Home',
-          component: import('../views/Home/index.vue')
+          component: () => import('../views/Home/index.vue')
         },
         {
           path: '/article/:id',
           name: 'Article',
-          component: import('../views/Article/index.vue')
+          component: () => import('../views/Article/index.vue')
         },
         {
           path: '/articleList',
           name: 'ArticleList',
-          component: import('../views/ArticleList/index.vue')
+          component: () => import('../views/ArticleList/index.vue')
         },
         {
           path: '/categoris',
           name: 'Categoris',
-          component: import('../views/Categoris/index.vue')
+          component: () => import('../views/Categoris/index.vue')
         },
         {
           path: '/tags',
           name: 'Tags',
-          component: import('../views/Tags/index.vue')
+          component: () => import('../views/Tags/index.vue')
         }
       ]
     },
     {
       path: '/404',
-      component: import('../views/404.vue')
+      component: () => import('../views/404.vue')
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (to.matched.length === 0) {
-      router.replace('/404')
-      return next()
+    router.replace('/404')
+    return next()
   } else {
     next()
-}
+  }
 })
 
 export default router
