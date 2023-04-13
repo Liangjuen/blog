@@ -1,33 +1,26 @@
 <template>
     <div class="home-page-container">
-        <Hero/>
+        <Hero />
         <div class="main-content center" id="article">
             <div class="content-item" v-for="item in state.list" :key="item.id" @click="readMore(item)">
-                <div class="cover-box"><img  :src="item.cover" /></div>
+                <div class="cover-box"><img v-lazy="item.cover" /></div>
                 <div class="title">
                     <span class="link">{{ item.title }}</span>
                     <div class="Abstract">{{ item.summary }}</div>
                     <div class="bottom-box">
                         <div class="tag-box">
-                            <a 
-                                @click.stop="router.push({ path:'/tags'})" 
-                                v-for="tagId in item.tags">
+                            <a @click.stop="router.push({ path: '/tags' })" v-for="tagId in item.tags">
                                 <i class="tag-item"></i>
                                 {{ findTag(tagId) }}
                             </a>
                         </div>
-                        <span>{{ format(item.create_time,'YYYY-MM-DD') }}</span>
-                    </div>  
+                        <span>{{ format(item.create_time, 'YYYY-MM-DD') }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <Pagination 
-            :pagerCount="pageCount" 
-            v-model:current-page="currentPage" 
-            @next-click="handelPageChange" 
-            @prev-click="handelPageChange" 
-            @current-change="handelPageChange"
-        />
+        <Pagination :pagerCount="pageCount" v-model:current-page="currentPage" @next-click="handelPageChange"
+            @prev-click="handelPageChange" @current-change="handelPageChange" />
     </div>
 </template>
 
@@ -43,10 +36,10 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const articleStore = useArticleStore()
 let currentPage = computed({
-    get(){
+    get() {
         return state.offset + 1
     },
-    set(val:number){
+    set(val: number) {
         state.offset = val - 1
     }
 })
@@ -61,14 +54,14 @@ let state = reactive<State>({
     total: 0,
     tags: []
 })
-let baseHref = computed(()=> document.location.href.split('#article')[0])
-let pageCount = computed(()=> state.total % state.pageSize == 0? state.total / state.pageSize : Math.floor(state.total / state.pageSize) + 1)
+let baseHref = computed(() => document.location.href.split('#article')[0])
+let pageCount = computed(() => state.total % state.pageSize == 0 ? state.total / state.pageSize : Math.floor(state.total / state.pageSize) + 1)
 
 // 获取文章列表
 const getArtList = async () => {
-    const {list, offset, total}  = await API.getArticleList({ pageSize: state.pageSize, offset:state.offset })
-    state.list = list.map(i=> {
-        i.tags = i.tags.split(',').map((n:string) => Number(n))
+    const { list, offset, total } = await API.getArticleList({ pageSize: state.pageSize, offset: state.offset })
+    state.list = list.map(i => {
+        i.tags = i.tags.split(',').map((n: string) => Number(n))
         return i
     })
     state.offset = offset
@@ -81,9 +74,9 @@ const getTags = () => {
     state.tags = articleStore.tags
 }
 
-const findTag = (tagId:number) => state.tags.find(item => item.id == tagId)?.name
+const findTag = (tagId: number) => state.tags.find(item => item.id == tagId)?.name
 
-const readMore = (item:API.Article) => {
+const readMore = (item: API.Article) => {
     articleStore.setArticle(item)
     router.push({
         name: 'Article',
@@ -91,7 +84,7 @@ const readMore = (item:API.Article) => {
     })
 }
 
-const handelPageChange = (num:number) => {
+const handelPageChange = (num: number) => {
     currentPage.value = num
     getArtList()
     document.location.href = baseHref.value + '#article'
@@ -129,40 +122,47 @@ onMounted(() => {
     transform: translateY(-5px);
 }
 
-.content-item .tag-box a:hover  {
+.content-item .tag-box a:hover {
     color: var(--color-border-hover);
 }
+
 .title {
     flex: 1 0 200px;
     padding: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items:flex-start;
+    align-items: flex-start;
     font-size: 1rem;
     box-sizing: border-box;
     overflow: hidden;
 }
+
 .title .link {
     font-size: 1.2rem;
     font-weight: bold;
 }
-.title .link, .Abstract {
-    overflow: hidden; 
+
+.title .link,
+.Abstract {
+    overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box; 
-    -webkit-box-orient: vertical; 
-    -webkit-line-clamp: 2; 
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
+
 .Abstract {
     font-size: 1rem;
     color: var(--color-text-2);
     line-height: 1.2rem;
 }
+
 .cover-box {
     min-width: 200px;
     height: 12rem;
 }
+
 .bottom-box {
     padding: 4px 0;
     display: flex;
@@ -171,14 +171,16 @@ onMounted(() => {
     width: 100%;
 }
 
-.tag-box > a {
+.tag-box>a {
     margin-right: 1rem;
 }
+
 .tag-item {
     margin-right: 1rem;
     position: relative;
     transition: all .3s;
 }
+
 .tag-item::before {
     position: absolute;
     top: 0.7rem;
@@ -189,14 +191,17 @@ onMounted(() => {
     font-size: 1rem;
     margin-right: 2px;
 }
+
 @media screen and (max-width: 700px) {
     .main-content {
         flex-direction: column;
     }
-    .content-item  {
+
+    .content-item {
         height: 22rem;
         flex-flow: row wrap;
     }
+
     .cover-box {
         width: 100%;
     }
@@ -206,10 +211,12 @@ onMounted(() => {
     .main-content {
         flex-direction: column;
     }
-    .content-item  {
+
+    .content-item {
         flex: 1;
         height: 25rem;
     }
+
     .cover-box {
         width: 45%;
     }
@@ -219,15 +226,18 @@ onMounted(() => {
     .main-content {
         justify-content: center;
     }
-    .content-item  {
+
+    .content-item {
         width: 500px;
         max-width: 560px;
         height: 22rem;
         flex-flow: row wrap;
     }
+
     .cover-box {
         width: 100%;
     }
+
     .content-item:nth-child(2n +1) {
         margin-right: 0;
     }
@@ -238,10 +248,10 @@ onMounted(() => {
         transform: translateY(4px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
     }
 }
-
 </style>

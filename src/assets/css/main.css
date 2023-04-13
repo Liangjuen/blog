@@ -3,9 +3,11 @@
 @import './dark.css';
 @import './light.css';
 @import './global.css';
+
 #app {
   height: 100%;
 }
+
 .center {
   max-width: 1280px !important;
   margin: 0 auto;
@@ -17,7 +19,7 @@
   min-height: calc(100vh - 140px);
 }
 
-@media screen and (max-width: 374px){
+@media screen and (max-width: 374px) {
   html {
     font-size: 12px;
   }
