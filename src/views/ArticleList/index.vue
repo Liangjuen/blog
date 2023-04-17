@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <Pagination :current-page="1" :pager-count="24" />
+            <Pagination :current-page="6" :pager-count="12" />
         </div>
     </div>
 </template>

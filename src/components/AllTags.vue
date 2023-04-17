@@ -5,21 +5,20 @@
             <div class="tags-box">
                 <router-link :to="`/${type}/${item.id}/`" class="tag-item" :class="activeId == item.id ? 'actived' : ''"
                     v-for="item in list">
-                    <span v-show="false">#</span>
-                    # {{ item.name }}
+                    {{ p }} {{ item.name }}
                 </router-link>
             </div>
         </template>
     </Card>
 </template>
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
 import Card from './Card.vue'
 type Item = {
     name: string,
     [propName: string]: any
 }
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
     type: 'categoris' | 'tags',
     list?: Item[],
     title?: string,
@@ -31,6 +30,8 @@ withDefaults(defineProps<{
     total: 99,
     activeId: 0
 })
+
+let p = computed(() => props.type == 'tags' ? '#' : '')
 
 </script>
 

@@ -244,8 +244,6 @@ section {
 .wave {
     height: calc(var(--height, 0) * 1vh);
     width: calc(var(--width, 0) * 1vw);
-    -webkit-animation: rise calc(var(--speed, 0) * 1.5s) infinite linear;
-    animation: rise calc(var(--speed, 0) * 1.5s) infinite linear;
 }
 
 .wave:nth-of-type(1) {
@@ -292,9 +290,10 @@ section {
     --delay: -3;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 750px) {
     .wave {
         height: calc(var(--height, 0) * 0.7vh);
+        width: calc(var(--width, 0) * 1.5vw);
     }
 }
 
