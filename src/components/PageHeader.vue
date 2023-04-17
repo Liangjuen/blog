@@ -3,13 +3,13 @@
         <div class="article-top center">
             <div class="article-att">
                 <div class="categoris">
-                    <router-link to="/" class="category-item">原创</router-link>
+                    <router-link to="/" class="category-item">{{ category?.name }}</router-link>
                 </div>
                 <div class="tags">
-                    <router-link to="/tags" class="tag-item" v-for="item in tags" >{{ item.name }}</router-link>
+                    <router-link to="/tags" class="tag-item" v-for="item in tags">{{ item.name }}</router-link>
                 </div>
             </div>
-            <div class="article-title">{{ article.title }}</div>
+            <h1 class="article-title">{{ article.title }}</h1>
             <div class="article-about">
                 <div>
                     <i class="iconfont icon-date"></i>
@@ -21,11 +21,12 @@
                 </div>
                 <div>
                     <i class="iconfont icon-comment"></i>
-                    <span class="text">{{  article.read_count || 199  }}</span>
+                    <span class="text">{{ article.read_count || 199 }}</span>
                 </div>
             </div>
         </div>
-        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 762 52.917" :key="item" preserveAspectRatio="none" v-for="item in 4">
+        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 762 52.917" :key="item" preserveAspectRatio="none"
+            v-for="item in 4">
             <defs>
                 <path id="wave"
                     d="M0 0c22.863 0 40.637 25.93 63.5 25.93S104.137 0 127 0s40.637 25.93 63.5 25.93S231.137 0 254 0s40.637 25.93 63.5 25.93S358.137 0 381 0s40.637 25.93 63.5 25.93S485.137 0 508 0s40.637 25.93 63.5 25.93S612.137 0 635 0s40.637 25.93 63.5 25.93S739.137 0 762 0v52.917H0z"
@@ -42,15 +43,17 @@
 </template>
 
 <script setup lang="ts">
-    import { computed } from 'vue'
-    import { useArticleStore } from '@/stores/article'
-    import { format } from '@/hooks/dateFormat'
-    const articleStore = useArticleStore()
+import { computed } from 'vue'
+import { useArticleStore } from '@/stores/article'
+import { format } from '@/hooks/dateFormat'
+const articleStore = useArticleStore()
 
-    let article = computed((): API.Article => articleStore.article)
-    let getRandomInt = (max:number) => Math.floor(Math.random() * max)
-    let theme = computed(()=> `theme${(getRandomInt(4) + 1)}`)
-    let tags = computed(()=> articleStore.tags)
+let article = computed((): API.Article => articleStore.article)
+let getRandomInt = (max: number) => Math.floor(Math.random() * max)
+let theme = computed(() => `theme${(getRandomInt(4) + 1)}`)
+let tags = computed(() => articleStore.tags)
+articleStore.getCategoris()
+let category = computed(() => articleStore.categoris.find(i => i.id == articleStore.article.cate_id))
 
 </script>
 
@@ -60,22 +63,27 @@
     background-color: var(--wave-1);
     --color-text-hover: var(--wave-1);
 }
+
 .theme2 {
     background-color: var(--wave-2);
     --color-text-hover: var(--wave-2);
 }
+
 .theme3 {
     background-color: var(--wave-3);
     --color-text-hover: var(--wave-3);
 }
+
 .theme4 {
     background-color: var(--wave-4);
     --color-text-hover: var(--wave-4);
 }
+
 .theme5 {
     background-color: var(--wave-5);
     --color-text-hover: var(--wave-5);
 }
+
 /* 定义主题 --start */
 
 /* 定义动画 -- start */
@@ -106,13 +114,14 @@
         transform: translate(0, calc(var(--rise) * -1%));
     }
 }
+
 /* 定义动画 -- end */
 
 .article-top {
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -120,6 +129,7 @@
     width: 100%;
     box-sizing: border-box;
 }
+
 .article-att {
     display: flex;
     padding: 15px;
@@ -139,23 +149,26 @@
     margin-right: 1rem;
     font-weight: 600;
     transition: color 0.4s, backgorund-color 0.3s;
-    letter-spacing: 0.5rem;
     box-shadow: var(--box-shadow);
 
 }
+
 .category-item:hover {
     color: var(--color-text-hover);
     background-color: var(--vt-c-white);
 }
+
 .tag-item {
     color: var(--vt-c-white-mute);
     margin-right: 2rem;
     position: relative;
     transition: all .3s;
 }
+
 .tag-item:hover {
     color: var(--vt-c-white);
 }
+
 .tag-item::before {
     position: absolute;
     top: 0.7rem;
@@ -174,17 +187,18 @@
     padding: 0 15px;
     /* line-height: 3.2rem; */
     font-weight: 600;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box; 
-    -webkit-box-orient: vertical; 
-    -webkit-line-clamp: 2; 
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 @media screen and (max-width: 750px) {
     .article-top {
         align-items: center;
     }
+
     .article-title {
         font-size: 1.8rem !important;
     }
@@ -200,6 +214,7 @@
 .article-about .iconfont {
     margin-right: 4px;
 }
+
 .article-about .text {
     font-weight: 600;
 }
@@ -208,6 +223,7 @@
     display: inline-block;
     margin-right: 12px;
 }
+
 /* 动画特效 */
 
 section {
@@ -289,5 +305,4 @@ section {
     animation: wave calc(var(--speed, 0) * 1s) infinite linear;
     animation-delay: calc(var(--delay * 1s));
 }
-
 </style>
