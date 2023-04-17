@@ -1,14 +1,18 @@
 [class*=-page-container]>.center>.card {
     background-color: var(--color-backgorund-main);
 }
+
 [class*=-page-container]>.center>.card .card-title {
     text-align: center;
 }
-[class*=-page-container] .card .tags-box, [class*=-page-container] .card .cate-box {
+
+[class*=-page-container] .card .tags-box,
+[class*=-page-container] .card .cate-box {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
 }
+
 [class*=-page-container] .card .tag-item,
 [class*=-page-container] .card .cate-item {
     position: relative;
@@ -22,9 +26,10 @@
     border: 1px solid var(--color-border);
     font-size: 1.2rem;
 }
+
 [class*=-page-container] .card .tag-item:hover,
 [class*=-page-container] .card .cate-item:hover {
     color: var(--color-avtive-text);
     background-color: var(--color-active);
-    transform: scale(1.1);
+    transform: translateY(-5px);
 }
