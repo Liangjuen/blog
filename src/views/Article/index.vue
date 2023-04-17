@@ -1,6 +1,6 @@
 <template>
     <div class="article-page-container">
-        <PageHeader  />
+        <PageHeader />
         <section class="articl center" id="more">
             <div class="article-main">
                 <p class="summary">{{ summary }}</p>
@@ -14,10 +14,8 @@
                     </template>
                     <template #content>
                         <ul class="direc-item">
-                            <li 
-                                @click.prevent="handleNavClick(item.slug)"
-                                v-for="item in state.docs" class="link" 
-                                :href="'#'+ item.slug">
+                            <li @click.prevent="handleNavClick(item.slug)" v-for="item in state.docs" class="link"
+                                :href="'#' + item.slug">
                                 {{ item.title }}
                             </li>
                         </ul>
@@ -40,7 +38,7 @@ import API from '@/network/api/index'
 const route = useRoute()
 const articleStroe = useArticleStore()
 let state = reactive<{
-    docs: {title: string, slug: string}[]
+    docs: { title: string, slug: string }[]
 }>({
     docs: []
 })
@@ -48,55 +46,65 @@ let html = ref<string>('')
 
 const getArticleContentByArtId = async () => {
     const data = await API.getArticleDetailByArtId({ id: Number(route.params.id) })
-    const { htmlStr,docs } = useMarkdownIt(data.content_md)
+    const { htmlStr, docs } = useMarkdownIt(data.content_md)
     html.value = htmlStr
     state.docs = docs
 }
-let summary = computed(()=> articleStroe.article.summary)
+let summary = computed(() => articleStroe.article.summary)
 const handleNavClick = (idName: string) => {
     let h = document.getElementById(idName)
     h?.scrollIntoView({ behavior: 'smooth' })
 }
-onMounted(()=> {
+onMounted(() => {
     getArticleContentByArtId()
 })
 
 </script>
 
 <style>
-.article-main ul li, ol li {
+.article-main ul li,
+ol li {
     transform: translateX(1rem);
 }
-.article-main ul li::marker, ol li::marker {
+
+.article-main ul li::marker,
+ol li::marker {
     color: var(--color-active);
 }
+
 .article-main ul li {
     list-style-type: decimal;
 }
+
 .article-main ol li {
     list-style-type: square;
 }
+
 .articl {
     padding: 15px;
     display: -webkit-box;
     display: flex;
 }
+
 .article-main {
     flex: 1;
     background-color: var(--color-text-background);
-    border-radius: 10px;   
+    border-radius: 10px;
     flex-direction: column;
     min-width: 0;
     box-shadow: var(--box-shadow);
 }
-.summary {
+
+.article-main .summary {
     text-indent: 2rem;
     padding: 15px;
     border-bottom: 2px dashed var(--color-border);
 }
-article { 
+
+article {
     padding: 15px;
 }
+
 .markdown-body pre.hljs {
     position: relative;
     margin: 1rem 0 !important;
@@ -105,26 +113,30 @@ article {
     overflow-x: auto !important;
     padding: 1.2rem;
 }
+
 article p code {
     background-color: var(--color-background-mute);
     padding: 0.15em 0.5em;
     border-radius: 4px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     white-space: nowrap;
 }
+
 article pre code {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     line-height: 1.4;
 }
 
-article h2, h3 {
+article h2,
+article h3 {
     margin: 2rem 0 6px 0;
 }
 
 article a {
-    transition: color 0.4s, text-decoration 0.3s ;
+    transition: color 0.4s, text-decoration 0.3s;
     color: var(--color-active);
 }
+
 article a:hover {
     text-decoration: underline;
 }
@@ -149,16 +161,19 @@ article pre .lang {
 .article-right {
     margin-left: 15px;
 }
+
 .article-right .card {
     position: sticky;
     top: 75px;
     max-height: 640px;
     overflow-y: auto;
 }
+
 .article-right .card .iconfont {
     font-size: 1.2rem;
     margin-right: 1rem;
 }
+
 .direc-item {
     display: flex;
     flex-direction: column;
@@ -166,20 +181,25 @@ article pre .lang {
     font-size: 1rem;
     color: var(--color-text);
 }
+
 .direc-item .title {
     font-weight: bold;
     font-size: 1rem;
 }
+
 .direc-item .link {
     padding: 2px 0;
     font-size: 14px;
     cursor: pointer;
 }
-.direc-item .link:hover, .direc-item .active {
+
+.direc-item .link:hover,
+.direc-item .active {
     color: var(--color-active);
 }
+
 @media screen and (max-width: 900px) {
-    .article-right  {
+    .article-right {
         display: none;
     }
 }
