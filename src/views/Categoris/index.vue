@@ -1,7 +1,7 @@
 <template>
     <div class="categoris-page-container">
         <div class="center">
-            <AllTags :total="state.list.length" :list="state.list" title="分类" />
+            <AllTags type="categoris" :total="state.list.length" :list="state.list" title="分类" />
         </div>
     </div>
 </template>
@@ -11,7 +11,7 @@ import AllTags from '../../components/AllTags.vue'
 import API from '@/network/api/index'
 import { reactive, onMounted } from 'vue'
 
-const state = reactive<{ list: API.CateList, [propName:string]:any }>({
+const state = reactive<{ list: API.CateList, [propName: string]: any }>({
     list: []
 })
 

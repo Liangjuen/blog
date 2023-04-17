@@ -14,15 +14,9 @@ declare module 'pinia' {
 
 type Store = PiniaPluginContext['store']
 
-interface LastingPluginOptions {
-    defaultStorage?: StorageName
-}
-
 const defaultStorage: Storage = sessionStorage
 const __piniaKey__: string = 'pinia'
 const getKey = (str: string) => `${__piniaKey__} - ${str}`
-
-export type StorageName = 'session' | 'local'
 
 export interface getStorageOptions {
     storage: Storage,
@@ -41,12 +35,12 @@ export interface LastingOptions {
 }
 
 export const updateStore = (strategy: LastingStrategy, store: Store) => {
-    const storage  = strategy.storage || sessionStorage
+    const storage = strategy.storage || sessionStorage
     const storeKey = strategy.key || getKey(store.$id)
-    if(strategy.exclude) {
-        let storageObj:{ [propName:string]: any } = {}
+    if (strategy.exclude) {
+        let storageObj: { [propName: string]: any } = {}
         for (let key in store.$state) {
-            if(!strategy.exclude.includes(key)) storageObj[key] = store.$state[key]
+            if (!strategy.exclude.includes(key)) storageObj[key] = store.$state[key]
         }
         storage.setItem(storeKey, JSON.stringify(storageObj))
     }
@@ -58,19 +52,19 @@ export const getStore = (options: getStorageOptions) => {
 }
 
 export default ({ options, store }: PiniaPluginContext) => {
-    if(options.lasting?.enabled) {
-        const strategies = options.lasting?.strategies? options.lasting?.strategies : {}
+    if (options.lasting?.enabled) {
+        const strategies = options.lasting?.strategies ? options.lasting?.strategies : {}
         const strategy: LastingStrategy = {
             storage: strategies.storage || defaultStorage,
             key: strategies.key || getKey(store.$id),
             exclude: strategies.exclude || []
         }
-        const data = getStore({ storage: strategy.storage as Storage, key: strategy.key as string})
+        const data = getStore({ storage: strategy.storage as Storage, key: strategy.key as string })
         store.$subscribe(() => {
-            updateStore(strategy, store) 
+            updateStore(strategy, store)
         })
-        console.log({...data});
-        
+        console.log({ ...data });
+
         return { ...data }
     }
 }

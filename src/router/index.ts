@@ -21,9 +21,15 @@ const router = createRouter({
           component: () => import('../views/Article/index.vue')
         },
         {
-          path: '/articleList',
+          path: '/:type/:id/',
           name: 'ArticleList',
-          component: () => import('../views/ArticleList/index.vue')
+          component: () => import('../views/ArticleList/index.vue'),
+          props: ({ params }) => params
+        },
+        {
+          path: '/:type/:id/page/:pageNum',
+          component: () => import('../views/ArticleList/index.vue'),
+          props: ({ params }) => params,
         },
         {
           path: '/categoris',

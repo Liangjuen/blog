@@ -7,12 +7,9 @@
             </RouterLink>
             <div class="btn-container">
                 <span class="iconfont icon-search"></span>
-                <span class="iconfont icon-theme" 
-                    @click.self="openThemeCheckBox" 
-                    ref="iconTheme" 
-                    v-closePanel="{close: closeThemeCheckBox, excludeNode:iconTheme}"
-                >
-                    <ThemeCheckBox v-model="showThemeCheckBox" className="top-theme-check-box"/>
+                <span class="iconfont icon-theme" @click.self="openThemeCheckBox" ref="iconTheme"
+                    v-closePanel="{ close: closeThemeCheckBox, excludeNode: iconTheme }">
+                    <ThemeCheckBox v-model="showThemeCheckBox" className="top-theme-check-box" />
                 </span>
                 <div class="links">
                     <nav>
@@ -29,7 +26,7 @@
                 </span>
             </div>
         </div>
-        <Screen v-model="showRightScreen"/>
+        <Screen v-model="showRightScreen" />
     </header>
 </template>
 
@@ -59,6 +56,7 @@ header {
     left: 0;
     z-index: 100;
 }
+
 .header-inner {
     height: 100%;
     padding: 15px;
@@ -66,29 +64,37 @@ header {
     display: flex;
     justify-content: space-between;
 }
-.header-inner .iconfont {
-    font-size: 18px;
+
+.header-inner {
+    font-size: 16px;
 }
-.header-inner span, .link-item {
+
+.header-inner span,
+.link-item {
     transition: color 0.4s, top .25s, transform .25s;
 }
+
 .header-inner span:hover,
 .header-inner a .icon-home:hover,
 .link-item:hover {
-    color: var(--color-border-hover) ;
+    color: var(--color-border-hover);
 }
+
 .to-home {
     color: var(--color-text);
     font-weight: 600;
     overflow: hidden;
 }
+
 .icon-home {
     display: none;
 }
+
 .myself {
     font-size: 24px !important;
 }
-.btn-container> span {
+
+.btn-container>span {
     position: relative;
     cursor: pointer;
     font-size: 18px !important;
@@ -99,14 +105,22 @@ header {
     color: var(--color-heading);
 }
 
-.btn-container, .links, .links {
+.btn-container,
+.links,
+.links {
     display: flex;
 }
+
 @media screen and (max-width: 700px) {
-    .myself, .icon-theme, .links {
+
+    .myself,
+    .icon-theme,
+    .links {
         display: none;
     }
-    .icon-home, .icon-box {
+
+    .icon-home,
+    .icon-box {
         display: block !important;
     }
 }
@@ -114,6 +128,7 @@ header {
 .link-item {
     margin-left: 1.4rem;
 }
+
 .link-item .iconfont {
     margin-right: 3px;
 }
@@ -126,36 +141,45 @@ header {
     overflow: hidden;
     display: none;
 }
- .line {
+
+.line {
     width: 18px;
     position: absolute;
     height: 2px;
     background-color: var(--color-text);
     left: 0;
 }
+
 .top {
     top: 0;
 }
+
 .middle {
     top: 7px;
     transform: translate(8px);
 }
+
 .bottom {
     bottom: 0;
     transform: translate(3px);
 }
+
 .icon-box:hover .line {
     background-color: var(--color-active);
 }
+
 .icon-box:hover .top {
     transform: translate(4px);
 }
+
 .icon-box:hover .middle {
     transform: translate(0);
 }
+
 .icon-box:hover .bottom {
     transform: translate(7px);
 }
+
 .top-theme-check-box {
     position: absolute;
     top: 50px;

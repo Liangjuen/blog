@@ -1,7 +1,7 @@
 <template>
     <div class="tags-page-container">
         <div class="center">
-            <AllTags title="标签" :total="state.list.length" :list="state.list" link="/tags"/>
+            <AllTags type="tags" title="标签" :total="state.list.length" :list="state.list" />
         </div>
     </div>
 </template>
@@ -10,7 +10,7 @@
 import AllTags from '../../components/AllTags.vue'
 import { reactive, onMounted } from 'vue'
 import API from '@/network/api/index'
-const state = reactive<{ list: API.TagList}>({
+const state = reactive<{ list: API.TagList }>({
     list: []
 })
 
@@ -20,7 +20,7 @@ const getTags = async () => {
     state.list = data
 }
 
-onMounted(()=> {
+onMounted(() => {
     getTags()
 })
 
