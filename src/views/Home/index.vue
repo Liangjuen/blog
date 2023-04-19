@@ -59,7 +59,7 @@ let pageCount = computed(() => state.total % state.pageSize == 0 ? state.total /
 
 // 获取文章列表
 const getArtList = async () => {
-    const { list, offset, total } = await API.getArticleList({ pageSize: state.pageSize, offset: state.offset })
+    const { list, offset, total } = await API.getArticleTopList({ pageSize: state.pageSize, offset: state.offset })
     state.list = list.map(i => {
         i.tags = i.tags.split(',').map((n: string) => Number(n))
         return i
