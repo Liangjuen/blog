@@ -6,7 +6,7 @@ import request from "../../request"
  * @param {[API.GetArticlesByTypeId]} params
  */
 
-const getArticleList = (params: API.GetArticlesByTypeId) => request.get<API.ArticleData>('/article/list', { params })
+const getArticleListByTypeId = (params: API.GetArticlesByTypeId) => request.get<API.ArticleData>('/article/list', { params })
 
 /**
  * 获取首页文章列表
@@ -23,7 +23,7 @@ const getArticleTopList = (params: API.GetArticleList) => request.get<API.Articl
 const getArticleDetailByArtId = (params: API.GetArticleContent) => request.get<API.ArticleContent>('/article/content', { params })
 
 export default {
-    getArticleList,
+    getArticleListByTypeId,
     getArticleTopList,
     getArticleDetailByArtId
 }

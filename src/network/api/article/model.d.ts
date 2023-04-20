@@ -1,21 +1,21 @@
 declare namespace API {
     interface GetArticleList {
-        offset: number, 
+        offset: number,
         pageSize: number
     }
 
     interface GetArticlesByTypeId extends GetArticleList {
-        type: 'cate' | 'tag', 
-        id: number | string
+        type?: 'cate' | 'tag',
+        id?: number | string
     }
-    
+
     interface Article {
-        title: string, 
-        cover: string, 
-        id: number, 
-        summary: string, 
+        title: string,
+        cover: string,
+        id: number,
+        summary: string,
         create_time: string,
-        [propName:string]:any
+        [propName: string]: any
     }
 
     interface ArticleData {
