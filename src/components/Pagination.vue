@@ -8,7 +8,7 @@
             }}</span>
             <span class="page-size last" @click="changePage(currentPage - 1)" v-show="currentPage > 2">{{ currentPage - 1
             }}</span>
-            <span class="page-size current">{{ currentPage }}</span>
+            <span class="page-size current" v-if="pagerCount">{{ currentPage }}</span>
             <span class="page-size next" @click="changePage(currentPage + 1)" v-show="currentPage < pagerCount - 1">{{
                 currentPage + 1 }}</span>
             <span class="page-size next" @click="changePage(currentPage + 2)" v-show="currentPage < pagerCount - 2">{{
