@@ -1,51 +1,117 @@
 <template>
     <div class="article-list-page-container">
         <div class="center">
-            <AllTags :total="state.list.length" :list="state.list" :type="type" :title="type == 'categoris' ? '分类' : '标签'"
+            <AllTags :total="state.arr.length" :list="state.arr" :type="type" :title="type == 'categoris' ? '分类' : '标签'"
                 :activeId="Number(id)" />
             <div class="articl-list">
-                <div class="article-item" v-for="item in 10">
-                    <div class="left"></div>
+                <div class="article-item" v-for="item in articleData.list" @click="readMore(item)">
+                    <div class="left">
+                        <img v-lazy="item.cover" />
+                    </div>
                     <div class="right">
-                        <h3 class="title">如何让博客支持AI摘要，使用TianliGPT自动生成文章的AI摘要</h3>
-                        <div class="summary">环境发生的环境</div>
+                        <h3 class="title">{{ item.title }}</h3>
+                        <div class="summary">{{ item.summary }}</div>
                         <div class="right-bottom">
                             <div class="tag-box">
-                                <router-link v-for="item in 3" to="/tags"><i class="tag-item"></i>前端</router-link>
+                                <a v-for="i in item.tags"
+                                    @click.stop="router.push({ name: 'ArticleList', params: { type: 'tags', id: i } })">
+                                    <i class="tag-item"></i>
+                                    {{ findTag(i) }}
+                                </a>
                             </div>
-                            <span>2023-4-16</span>
+                            <span>{{ format(item.pub_date || item.create_time, 'YYYY-MM-DD') }}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <Pagination :current-page="6" :pager-count="12" />
+            <Pagination :current-page="articleData.offset + 1" :pager-count="pageCount" @next-click="handelPageChange"
+                @prev-click="handelPageChange" @current-change="handelPageChange" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, onMounted } from 'vue'
+import { defineProps, reactive, onMounted, computed } from 'vue'
 import AllTags from '../../components/AllTags.vue'
 import { useArticleStore } from '@/stores/article'
 import Pagination from '@/components/Pagination.vue'
+import API from '@/network/api/index'
+import { format } from '@/hooks/dateFormat'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const props = defineProps<{
     type: 'tags' | 'categoris',
-    id?: string
+    id?: string,
+    pageNum?: string
 }>()
 
 const articleStore = useArticleStore()
-const state = reactive<{ list: API.CateList | API.TagList }>({
-    list: []
+const state = reactive<{ arr: API.CateList | API.TagList, }>({ arr: [] })
+
+const articleData = reactive<API.ArticleData>({
+    list: [],
+    offset: 0,
+    pageSize: 2,
+    total: 0
 })
+
+articleData.offset = props.pageNum ? Number(props.pageNum) - 1 : 0
+
+let tags = computed(() => articleStore.tags)
+
+console.log();
+
+
+// 获取博客列表
+const getArticleListByTypeId = async () => {
+    const { list, offset, pageSize, total } = await API.getArticleListByTypeId({
+        pageSize: articleData.pageSize,
+        offset: articleData.offset,
+        type: props.type == 'categoris' ? 'cate' : 'tag',
+        id: props.id
+    })
+    articleData.list = list.map(item => {
+        item.tags = item.tags.split(',').map((n: string) => Number(n))
+        return item
+    })
+    articleData.offset = offset
+    articleData.pageSize = pageSize
+    articleData.total = total
+}
+
+// 计算当前总页码
+let pageCount = computed(() => (articleData.total % articleData.pageSize == 0 ?
+    articleData.total / articleData.pageSize :
+    Math.floor(articleData.total / articleData.pageSize) + 1))
+
+const findTag = (tagId: number) => tags.value.find(item => item.id == tagId)?.name
+
+// 点击页码跳转
+const handelPageChange = (num: number) => {
+    router.push({
+        name: num > 1 ? 'ArticleListPage' : 'ArticleList',
+        params: num > 1 ? { type: props.type, id: props.id, pageNum: num } : { type: props.type, id: props.id }
+    })
+}
+
+// 点击文章项跳转
+const readMore = (item: API.Article) => {
+    articleStore.setArticle(item)
+    router.push({
+        name: 'Article',
+        params: { id: item.id }
+    })
+}
 
 onMounted(() => {
     if (props.type == 'categoris') {
         articleStore.getCategoris()
-        state.list = articleStore.categoris
+        state.arr = articleStore.categoris
     } else {
         articleStore.getTags()
-        state.list = articleStore.tags
+        state.arr = articleStore.tags
     }
+    getArticleListByTypeId()
 })
 </script>
 
@@ -61,6 +127,7 @@ onMounted(() => {
     background-color: var(--color-text-background);
     transition: box-shadow .4s, transform .2s ease-in;
     border-radius: 8px;
+    overflow: hidden;
 }
 
 .article-item:hover {
@@ -93,9 +160,6 @@ onMounted(() => {
 
 .article-item .left {
     height: 108px;
-    background-color: #ff9700;
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .article-item .right {

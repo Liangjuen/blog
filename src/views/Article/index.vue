@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import PageHeader from '../../components/PageHeader.vue'
+import PageHeader from './PageHeader.vue'
 import Card from '../../components/Card.vue'
 import { useArticleStore } from '@/stores/article'
 import { useRoute } from 'vue-router'
