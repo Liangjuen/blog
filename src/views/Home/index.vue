@@ -1,7 +1,8 @@
 <template>
     <div class="home-page-container">
         <Hero />
-        <div class="main-content center" id="article">
+        <div id="article"></div>
+        <div class="main-content center">
             <div class="content-item" v-for="item in state.list" :key="item.id" @click="readMore(item)">
                 <div class="cover-box"><img v-lazy="item.cover" /></div>
                 <div class="title">
@@ -9,7 +10,8 @@
                     <div class="Abstract">{{ item.summary }}</div>
                     <div class="bottom-box">
                         <div class="tag-box">
-                            <a @click.stop="router.push({ path: '/tags' })" v-for="tagId in item.tags">
+                            <a v-for="tagId in item.tags"
+                                @click.stop="router.push({ name: 'ArticleList', params: { type: 'tags', id: tagId } })">
                                 <i class="tag-item"></i>
                                 {{ findTag(tagId) }}
                             </a>
@@ -26,7 +28,7 @@
 
 <script setup lang="ts">
 import Hero from './Hero.vue'
-import { onMounted, reactive, computed } from 'vue'
+import { onMounted, reactive, computed, defineProps } from 'vue'
 import Pagination from '../../components/Pagination.vue'
 import { useArticleStore } from '@/stores/article'
 import API from '@/network/api/index'
@@ -34,6 +36,9 @@ import { format } from '@/hooks/dateFormat'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const props = defineProps<{
+    pageNum?: string
+}>()
 const articleStore = useArticleStore()
 let currentPage = computed({
     get() {
@@ -49,12 +54,15 @@ interface State extends API.ArticleData {
 
 let state = reactive<State>({
     list: [],
-    pageSize: 8,
+    pageSize: 6,
     offset: 0,
     total: 0,
     tags: []
 })
-let baseHref = computed(() => document.location.href.split('#article')[0])
+
+state.offset = props.pageNum ? Number(props.pageNum) - 1 : 0
+
+// let baseHref = computed(() => document.location.href.split('#article')[0])
 let pageCount = computed(() => state.total % state.pageSize == 0 ? state.total / state.pageSize : Math.floor(state.total / state.pageSize) + 1)
 
 // 获取文章列表
@@ -84,15 +92,18 @@ const readMore = (item: API.Article) => {
     })
 }
 
+// 点击页码跳转
 const handelPageChange = (num: number) => {
-    currentPage.value = num
-    getArtList()
-    document.location.href = baseHref.value + '#article'
+    router.push({
+        name: num > 1 ? 'HomePage' : 'Home',
+        params: num > 1 ? { pageNum: num } : {}
+    })
 }
 
 onMounted(() => {
     getTags()
     getArtList()
+    // document.location.href = baseHref.value + '#article'
 })
 </script>
 
