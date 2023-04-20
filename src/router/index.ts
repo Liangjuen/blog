@@ -16,6 +16,12 @@ const router = createRouter({
           component: () => import('../views/Home/index.vue')
         },
         {
+          path: '/page/:pageNum/',
+          name: 'HomePage',
+          component: () => import('../views/Home/index.vue'),
+          props: ({ params }) => params
+        },
+        {
           path: '/article/:id',
           name: 'Article',
           component: () => import('../views/Article/index.vue')
@@ -28,6 +34,7 @@ const router = createRouter({
         },
         {
           path: '/:type/:id/page/:pageNum',
+          name: 'ArticleListPage',
           component: () => import('../views/ArticleList/index.vue'),
           props: ({ params }) => params,
         },
