@@ -54,7 +54,7 @@ interface State extends API.ArticleData {
 
 let state = reactive<State>({
     list: [],
-    pageSize: 6,
+    pageSize: 10,
     offset: 0,
     total: 0,
     tags: []

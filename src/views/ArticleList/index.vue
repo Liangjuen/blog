@@ -51,7 +51,7 @@ const state = reactive<{ arr: API.CateList | API.TagList, }>({ arr: [] })
 const articleData = reactive<API.ArticleData>({
     list: [],
     offset: 0,
-    pageSize: 2,
+    pageSize: 12,
     total: 0
 })
 

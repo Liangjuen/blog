@@ -59,12 +59,15 @@ export default ({ options, store }: PiniaPluginContext) => {
             key: strategies.key || getKey(store.$id),
             exclude: strategies.exclude || []
         }
-        const data = getStore({ storage: strategy.storage as Storage, key: strategy.key as string })
+        let _data = getStore({ storage: strategy.storage as Storage, key: strategy.key as string })
+        const data = store.$state
+        for (let key in _data) {
+            data[key] = _data[key]
+        }
+        console.log(data)
         store.$subscribe(() => {
             updateStore(strategy, store)
         })
-        console.log({ ...data });
-
         return { ...data }
     }
 }
