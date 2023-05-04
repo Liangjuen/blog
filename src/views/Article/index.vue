@@ -4,7 +4,9 @@
         <section class="articl center" id="more">
             <div class="article-main">
                 <p class="summary">{{ summary }}</p>
-                <article v-html="html" :class="`markdown-body ${'hljs-atom-one-light'}`"></article>
+                <!-- <article v-html="html" :class="`markdown-body ${'hljs-atom-one-light'}`"></article> -->
+                <MdEditor :editorId="state.id" v-model="text" theme="dark" previewTheme="github" codeTheme="github"
+                    previewOnly @onGetCatalog="onGetCatalog" />
             </div>
             <aside class="article-right">
                 <Card v-if="state.docs.length">
@@ -13,12 +15,13 @@
                         <span>目录</span>
                     </template>
                     <template #content>
-                        <ul class="direc-item">
-                            <li @click.prevent="handleNavClick(item.slug)" v-for="item in state.docs" class="link"
-                                :href="'#' + item.slug">
-                                {{ item.title }}
+                        <!-- <ul class="direc-item">
+                            <li @click.prevent="handleNavClick(item.text)" v-for="item in state.docs" class="link"
+                                :href="'#' + item.text">
+                                {{ item.text }}
                             </li>
-                        </ul>
+                        </ul> -->
+                        <MdCatalog :editorId="state.id" :scrollElement="scrollElement" theme="dark" />
                     </template>
                 </Card>
             </aside>
@@ -31,30 +34,46 @@ import PageHeader from './PageHeader.vue'
 import Card from '../../components/Card.vue'
 import { useArticleStore } from '@/stores/article'
 import { useRoute } from 'vue-router'
-import { onMounted, ref, computed, reactive, toRefs } from 'vue'
-import useMarkdownIt from '@/hooks/markdownIt'
+import { onMounted, ref, computed, reactive } from 'vue'
+// import useMarkdownIt from '@/hooks/markdownIt'
 import API from '@/network/api/index'
 
+import MdEditor from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
+const MdCatalog = MdEditor.MdCatalog
+const scrollElement = document.documentElement
+interface Doc {
+    text: string,
+    level: number
+}
 const route = useRoute()
 const articleStroe = useArticleStore()
 let state = reactive<{
-    docs: { title: string, slug: string }[]
+    docs: Doc[],
+    id: string
 }>({
-    docs: []
+    docs: [],
+    id: 'my-editor'
 })
-let html = ref<string>('')
+
+let text = ref<string>('')
 
 const getArticleContentByArtId = async () => {
     const data = await API.getArticleDetailByArtId({ id: Number(route.params.id) })
-    const { htmlStr, docs } = useMarkdownIt(data.content_md)
-    html.value = htmlStr
-    state.docs = docs
+    text.value = data.content_md
 }
 let summary = computed(() => articleStroe.article.summary)
 const handleNavClick = (idName: string) => {
     let h = document.getElementById(idName)
     h?.scrollIntoView({ behavior: 'smooth' })
 }
+
+const onGetCatalog = (list: Doc[]) => {
+    console.log(list)
+
+    state.docs = list
+}
+
 onMounted(() => {
     getArticleContentByArtId()
 })
@@ -62,28 +81,40 @@ onMounted(() => {
 </script>
 
 <style>
-.article-main ul li,
-ol li {
-    transform: translateX(1rem);
-}
-
-.article-main ul li::marker,
-ol li::marker {
-    color: var(--color-active);
-}
-
-.article-main ul li {
-    list-style-type: decimal;
-}
-
-.article-main ol li {
-    list-style-type: square;
-}
-
 .articl {
     padding: 15px;
     display: -webkit-box;
     display: flex;
+}
+
+.md-editor-dark {
+    --md-bk-color: var(--color-text-background) !important;
+}
+
+.md-editor-dark article.github-theme {
+    --md-theme-color: var(--color-text) !important;
+    --md-theme-heading-color: var(--color-text) !important;
+}
+
+.github-theme a {
+    color: var(--color-active) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    border-bottom: none !important;
+}
+
+.md-editor-catalog-active>span {
+    color: var(--color-active) !important;
+}
+
+.md-editor-catalog-link span:hover {
+    color: var(--color-active) !important;
 }
 
 .article-main {
@@ -99,46 +130,6 @@ ol li::marker {
     text-indent: 2rem;
     padding: 15px;
     border-bottom: 2px dashed var(--color-border);
-}
-
-article {
-    padding: 15px;
-}
-
-.markdown-body pre.hljs {
-    position: relative;
-    margin: 1rem 0 !important;
-    z-index: 1;
-    border-radius: 8px;
-    overflow-x: auto !important;
-    padding: 1.2rem;
-}
-
-article p code {
-    background-color: var(--color-background-mute);
-    padding: 0.15em 0.5em;
-    border-radius: 4px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    white-space: nowrap;
-}
-
-article pre code {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    line-height: 1.4;
-}
-
-article h2,
-article h3 {
-    margin: 2rem 0 6px 0;
-}
-
-article a {
-    transition: color 0.4s, text-decoration 0.3s;
-    color: var(--color-active);
-}
-
-article a:hover {
-    text-decoration: underline;
 }
 
 article pre .lang {
