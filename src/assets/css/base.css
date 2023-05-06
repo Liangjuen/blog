@@ -19,7 +19,7 @@
   --vt-c-text-light-1: var(--vt-c-indigo);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(241, 242, 246,0.66);
+  --vt-c-text-dark-2: rgba(241, 242, 246, 0.66);
 
 
   /* 页头水波特效 */
@@ -49,13 +49,14 @@ html {
   overflow-y: overlay;
   background-color: var(--color-background-main);
 }
+
 a {
   text-decoration: none;
 }
 
 body {
   color: var(--color-text);
-  transition: color 0.4s, background-color 0.3s;
+  transition: color 0.4s, background-color 0.3s, scale 0.3s;
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

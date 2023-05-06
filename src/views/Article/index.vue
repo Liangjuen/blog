@@ -15,12 +15,6 @@
                         <span>目录</span>
                     </template>
                     <template #content>
-                        <!-- <ul class="direc-item">
-                            <li @click.prevent="handleNavClick(item.text)" v-for="item in state.docs" class="link"
-                                :href="'#' + item.text">
-                                {{ item.text }}
-                            </li>
-                        </ul> -->
                         <MdCatalog :editorId="state.id" :scrollElement="scrollElement" theme="dark" />
                     </template>
                 </Card>
@@ -69,8 +63,6 @@ const handleNavClick = (idName: string) => {
 }
 
 const onGetCatalog = (list: Doc[]) => {
-    console.log(list)
-
     state.docs = list
 }
 
@@ -96,8 +88,26 @@ onMounted(() => {
     --md-theme-heading-color: var(--color-text) !important;
 }
 
+.github-theme blockquote {
+    background-color: var(--color-background-mute);
+    border-left: 0.25rem solid var(--color-border-hover);
+    display: block;
+    line-height: 3;
+    margin: 20px 0px;
+    padding: 0px 1.2em;
+}
+
+.github-theme table tr:nth-child(2n) {
+    background: none;
+}
+
 .github-theme a {
     color: var(--color-active) !important;
+}
+
+.github-theme pre code,
+p {
+    font-size: 1rem;
 }
 
 h1,
@@ -113,6 +123,10 @@ h6 {
     color: var(--color-active) !important;
 }
 
+.md-editor-catalog-link span {
+    color: var(--color-text);
+}
+
 .md-editor-catalog-link span:hover {
     color: var(--color-active) !important;
 }
@@ -124,25 +138,13 @@ h6 {
     flex-direction: column;
     min-width: 0;
     box-shadow: var(--box-shadow);
+    overflow: hidden;
 }
 
 .article-main .summary {
     text-indent: 2rem;
     padding: 15px;
     border-bottom: 2px dashed var(--color-border);
-}
-
-article pre .lang {
-    line-height: 1rem;
-    position: absolute;
-    top: 4px;
-    right: 8px;
-    color: var(--vt-c-text-dark-2);
-    z-index: 3;
-    cursor: default;
-    opacity: 0.6;
-    font-weight: 500;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .article-right .card {
