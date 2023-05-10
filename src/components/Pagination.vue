@@ -87,7 +87,7 @@ const checkLast = () => {
     background-color: var(--color-text-background);
     line-height: 3rem;
     text-align: center;
-    border-radius: 50%;
+    border-radius: 10px;
     cursor: pointer;
     transition: color .3s, backgorund-color .3s, box-shadow .2s, transform .3s;
 }

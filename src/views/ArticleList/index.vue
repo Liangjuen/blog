@@ -59,9 +59,6 @@ articleData.offset = props.pageNum ? Number(props.pageNum) - 1 : 0
 
 let tags = computed(() => articleStore.tags)
 
-console.log();
-
-
 // 获取博客列表
 const getArticleListByTypeId = async () => {
     const { list, offset, pageSize, total } = await API.getArticleListByTypeId({
@@ -195,13 +192,13 @@ onMounted(() => {
     font-size: 12px;
 }
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 751px) {
     .article-item .left {
         width: 108px;
     }
 }
 
-@media screen and (min-width: 1080px) {
+@media screen and (min-width: 750px) {
     .article-item .left {
         width: 192px;
     }

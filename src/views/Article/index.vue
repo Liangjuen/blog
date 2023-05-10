@@ -4,7 +4,6 @@
         <section class="articl center" id="more">
             <div class="article-main">
                 <p class="summary">{{ summary }}</p>
-                <!-- <article v-html="html" :class="`markdown-body ${'hljs-atom-one-light'}`"></article> -->
                 <MdEditor :editorId="state.id" v-model="text" theme="dark" previewTheme="github" codeTheme="github"
                     previewOnly @onGetCatalog="onGetCatalog" />
             </div>
@@ -15,7 +14,7 @@
                         <span>目录</span>
                     </template>
                     <template #content>
-                        <MdCatalog :editorId="state.id" :scrollElement="scrollElement" theme="dark" />
+                        <MdCatalog :offsetTop="80" :editorId="state.id" :scrollElement="scrollElement" theme="dark" />
                     </template>
                 </Card>
             </aside>
@@ -29,7 +28,6 @@ import Card from '../../components/Card.vue'
 import { useArticleStore } from '@/stores/article'
 import { useRoute } from 'vue-router'
 import { onMounted, ref, computed, reactive } from 'vue'
-// import useMarkdownIt from '@/hooks/markdownIt'
 import API from '@/network/api/index'
 
 import MdEditor from 'md-editor-v3'
@@ -54,13 +52,9 @@ let text = ref<string>('')
 
 const getArticleContentByArtId = async () => {
     const data = await API.getArticleDetailByArtId({ id: Number(route.params.id) })
-    text.value = data.content_md
+    text.value = data.content_md || ''
 }
 let summary = computed(() => articleStroe.article.summary)
-const handleNavClick = (idName: string) => {
-    let h = document.getElementById(idName)
-    h?.scrollIntoView({ behavior: 'smooth' })
-}
 
 const onGetCatalog = (list: Doc[]) => {
     state.docs = list

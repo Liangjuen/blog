@@ -18,5 +18,6 @@
 .saying {
     color: var(--vt-c-white);
     font-size: 2rem;
+    padding: 15px;
 }
 </style>
