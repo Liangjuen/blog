@@ -190,4 +190,10 @@ h6 {
         display: none;
     }
 }
+
+@media screen and (max-width: 750px) {
+    .articl {
+        padding: 0;
+    }
+}
 </style>

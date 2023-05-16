@@ -152,7 +152,15 @@ onMounted(() => {
 .title .link {
     font-size: 1.2rem;
     font-weight: bold;
+    /* background: linear-gradient(to right, #ff9700, #ff9700) no-repeat right bottom;
+    background-size: 0 2px;
+    transition: background-size 500ms; */
 }
+
+/* .content-item:hover .link {
+    background-position-x: left;
+    background-size: 100% 2px;
+} */
 
 .title .link,
 .Abstract {
