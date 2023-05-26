@@ -135,6 +135,19 @@ h6 {
     overflow: hidden;
 }
 
+.article-main img {
+    position: static;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+}
+
+.medium-zoom-image--opened {
+    min-height: auto;
+    inset: auto;
+    min-width: auto;
+}
+
 .article-main .summary {
     text-indent: 2rem;
     padding: 15px;
@@ -153,6 +166,7 @@ h6 {
     position: sticky;
     top: 75px;
     max-height: 640px;
+    max-width: 300px;
     overflow-y: auto;
 }
 
