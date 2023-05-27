@@ -3,27 +3,24 @@
         <div class="screen" ref="screen" v-if="modelValue" @click.self="close"></div>
     </Transition>
     <Transition name="menu">
-            <div v-if="showMenuContainer" class="menu-container" >
-                <div class="card">
-                    <nav>
-                        <router-link 
-                            v-for="item in navList" 
-                            :to="item.path" 
-                            class="nav-item" 
-                            @click="close"
-                        >   <i class="iconfont" :class="item.icon"></i>
-                            {{ item.title }}
-                        </router-link>
-                    </nav>
-                    <ThemeCheckBox v-model="showMenuContainer"/>
-                </div>
+        <div v-if="showMenuContainer" class="menu-container">
+            <div class="card">
+                <nav>
+                    <router-link v-for="item in navList" :to="item.path" class="nav-item" @click="close"
+                        :class="activePath.includes(item.path) ? 'active' : ''"> <i class="iconfont"
+                            :class="item.icon + ' ' + (activePath.includes(item.path) ? 'active' : '')"></i>
+                        {{ item.title }}
+                    </router-link>
+                </nav>
+                <ThemeCheckBox v-model="showMenuContainer" />
             </div>
-        </Transition>
+        </div>
+    </Transition>
 </template>
 
 <script setup lang="ts">
 import { ref, defineEmits, watch } from 'vue'
-import useGetNavList from '../hooks/nav'
+import useGetNavList, { useActiveNav } from '../hooks/nav'
 import ThemeCheckBox from './ThemeCheckBox.vue'
 const props = defineProps<{
     modelValue: boolean
@@ -38,12 +35,14 @@ const close = () => {
     emit('update:modelValue', false)
 }
 
-watch(()=> props.modelValue,(val) => {
-        showMenuContainer.value = val
+watch(() => props.modelValue, (val) => {
+    showMenuContainer.value = val
 }, {
     immediate: true
 })
 
+
+let activePath = useActiveNav()
 
 
 </script>
@@ -60,6 +59,7 @@ watch(()=> props.modelValue,(val) => {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 .menu-container {
     position: fixed;
     top: 0;
@@ -70,12 +70,14 @@ watch(()=> props.modelValue,(val) => {
     padding: 1rem;
     z-index: 200;
 }
+
 .card {
     padding: 1rem 4px;
     border-radius: 8px;
     overflow: hidden;
     background-color: var(--color-background-soft);
 }
+
 nav {
     margin-bottom: 30px;
 }
@@ -96,13 +98,13 @@ nav {
 
 .menu-enter-active,
 .menu-leave-active {
-  transition: transform 0.5s ease, opacity 0.3s;
+    transition: transform 0.5s ease, opacity 0.3s;
 }
 
 .menu-enter-from,
 .menu-leave-to {
-  transform: translate(100%);
-  opacity: 0;
+    transform: translate(100%);
+    opacity: 0;
 }
 
 .menu-enter-to,
@@ -113,11 +115,11 @@ nav {
 
 .screen-enter-active,
 .screen-leave-active {
-  transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 .screen-enter-from,
 .screen-leave-to {
-  opacity: 0;
+    opacity: 0;
 }
 </style>

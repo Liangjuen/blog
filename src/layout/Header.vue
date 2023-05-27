@@ -13,8 +13,10 @@
                 </span>
                 <div class="links">
                     <nav>
-                        <router-link v-for="item in navList" :to="item.path" class="link-item">
-                            <i class="iconfont" :class="item.icon"></i>
+                        <router-link v-for="item in navList" :to="item.path" class="link-item"
+                            :class="activePath.includes(item.path) ? 'active' : ''">
+                            <i class="iconfont"
+                                :class="item.icon + ' ' + (activePath.includes(item.path) ? 'active' : '')"></i>
                             {{ item.title }}
                         </router-link>
                     </nav>
@@ -33,9 +35,8 @@
 <script setup lang="ts">
 import ThemeCheckBox from '../components/ThemeCheckBox.vue'
 import Screen from '../components/Screen.vue'
-import useGetNavList from '../hooks/nav'
-
-import { ref } from 'vue'
+import useGetNavList, { useActiveNav } from '../hooks/nav'
+import { ref, watch } from 'vue'
 const iconTheme = ref<Element>()
 let showThemeCheckBox = ref<boolean>(false)
 let showRightScreen = ref<boolean>(false)
@@ -43,6 +44,7 @@ const navList = useGetNavList()
 const openThemeCheckBox = () => showThemeCheckBox.value = true
 const closeThemeCheckBox = () => showThemeCheckBox.value = false
 const openRightScreen = () => showRightScreen.value = true
+let activePath = useActiveNav()
 
 </script>
 
@@ -103,6 +105,10 @@ header {
 
 .to-home .icon-home:hover {
     color: var(--color-heading);
+}
+
+.active {
+    color: var(--color-active);
 }
 
 .btn-container,
