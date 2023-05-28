@@ -2,28 +2,29 @@ import axios from 'axios'
 import config from './config'
 import type { AxiosRequestConfig, AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios'
 import type { BaseConfig, RequestInterceptors, RequestConfig, Data } from './types'
-
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 export class Request {
     // axios 实例
     instance: AxiosInstance
     // 基础配置
-    BaseConfig:BaseConfig = { baseURL: config.baseURL, timeout: 5000 }
+    BaseConfig: BaseConfig = { baseURL: config.baseURL, timeout: 5000 }
     // 拦截器对象
     interceptorsObj?: RequestInterceptors
 
-    constructor (config: RequestConfig) {
+    constructor(config: RequestConfig) {
         this.instance = axios.create(Object.assign(this.BaseConfig, config))
         this.interceptorsObj = config.interceptors
 
         // 全局请求拦截
         this.instance.interceptors.request.use(
-            (req: InternalAxiosRequestConfig)=> {
+            (req: InternalAxiosRequestConfig) => {
                 // 请求前的处理在这里
                 // ...
-
+                NProgress.start()
                 return req
             },
-            (err: any)=> err
+            (err: any) => err
         )
 
         // 使用实例拦截器
@@ -40,9 +41,10 @@ export class Request {
         this.instance.interceptors.response.use(
             (res: AxiosResponse) => {
                 console.log(res.data)
+                NProgress.done()
                 return res.data.data
             },
-            (err: any)=> {
+            (err: any) => {
                 console.log(err)
                 Request.handleNetworkError(err.response.status)
                 return Promise.reject(err.response)
@@ -51,7 +53,7 @@ export class Request {
     }
 
     // 这里用来处理http常见错误，进行全局提示
-    static handleNetworkError (status: number) {
+    static handleNetworkError(status: number) {
         let message = "未知错误"
         switch (status) {
             case 400:
@@ -93,8 +95,8 @@ export class Request {
     }
 
     public get<T = any>(
-        url: string, 
-        config?: AxiosRequestConfig 
+        url: string,
+        config?: AxiosRequestConfig
     ): Promise<T> {
         return this.instance.get(url, config)
     }
@@ -114,7 +116,7 @@ export class Request {
     ): Promise<T> {
         return this.instance.put(url, data, config)
     }
-    
+
     public delete<T = any>(
         url: string,
         config?: AxiosRequestConfig

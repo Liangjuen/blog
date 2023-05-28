@@ -33,3 +33,7 @@
     background-color: var(--color-active);
     transform: translateY(-5px);
 }
+
+#nprogress .bar {
+    background: var(--color-active) !important;
+}
