@@ -15,6 +15,7 @@ declare namespace API {
         id: number,
         summary: string,
         create_time: string,
+        tags: string,
         [propName: string]: any
     }
 
@@ -33,6 +34,10 @@ declare namespace API {
     }
 
     interface GetArticleContent {
+        id: number
+    }
+
+    interface GetArticle {
         id: number
     }
 }

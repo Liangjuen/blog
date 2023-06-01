@@ -260,6 +260,14 @@ onMounted(() => {
     .content-item:nth-child(2n +1) {
         margin-right: 0;
     }
+
+    .main-content::after {
+        height: 0;
+        content: '';
+        width: 500px;
+        max-width: 560px;
+        margin: 20px 15px 0 15px;
+    }
 }
 
 @keyframes artitem {

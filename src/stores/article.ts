@@ -5,6 +5,7 @@ import API from '@/network/api/index'
 export const useArticleStore = defineStore(Names.ARTICLE, {
     state: () => {
         return {
+            id: 0,
             article: <API.Article>{},
             categoris: <API.CateList>[],
             tags: <API.TagList>[]
@@ -24,6 +25,11 @@ export const useArticleStore = defineStore(Names.ARTICLE, {
 
         setArticle(current: API.Article) {
             this.article = current
+        },
+
+        async getArticle(id: number) {
+            const data = await API.getArticleById({ id })
+            this.article = data
         }
     },
 

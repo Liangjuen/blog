@@ -22,8 +22,15 @@ const getArticleTopList = (params: API.GetArticleList) => request.get<API.Articl
  */
 const getArticleDetailByArtId = (params: API.GetArticleContent) => request.get<API.ArticleContent>('/article/content', { params })
 
+/*
+* 获取文章信息
+*
+*/
+const getArticleById = (params: API.GetArticle) => request.get<API.Article>('/article', { params })
+
 export default {
     getArticleListByTypeId,
     getArticleTopList,
-    getArticleDetailByArtId
+    getArticleDetailByArtId,
+    getArticleById
 }

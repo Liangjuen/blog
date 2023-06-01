@@ -11,7 +11,7 @@
                 <div class="tags">
                     <router-link :to="{ name: 'ArticleList', params: { type: 'tags', id: item } }" @click.stop=""
                         class="tag-item" v-for="item in tags">
-                        {{ findTag(item) }}
+                        {{ findTag(Number(item)) }}
                     </router-link>
                 </div>
             </div>
@@ -52,16 +52,16 @@
 import { computed } from 'vue'
 import { useArticleStore } from '@/stores/article'
 import { format } from '@/hooks/dateFormat'
+
 const articleStore = useArticleStore()
 
 let article = computed((): API.Article => articleStore.article)
 let getRandomInt = (max: number) => Math.floor(Math.random() * max)
 let theme = computed(() => `theme${(getRandomInt(4) + 1)}`)
 
-let tags = computed(() => article.value.tags)
+let tags = computed(() => articleStore.article.tags)
 const findTag = (tagId: number) => articleStore.tags.find((item: { id: number }) => item.id == tagId)?.name
 
-articleStore.getCategoris()
 let category = computed(() => articleStore.categoris.find(i => i.id == article.value.cate_id))
 
 </script>

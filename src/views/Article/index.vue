@@ -4,7 +4,7 @@
         <section class="articl center" id="more">
             <div class="article-main">
                 <p class="summary">{{ summary }}</p>
-                <MdEditor :editorId="state.id" v-model="text" theme="dark" previewTheme="github" codeTheme="github"
+                <MdEditor :editorId="state.editorId" v-model="text" theme="dark" previewTheme="github" codeTheme="github"
                     previewOnly @onGetCatalog="onGetCatalog" />
             </div>
             <aside class="article-right">
@@ -14,7 +14,7 @@
                         <span>目录</span>
                     </template>
                     <template #content>
-                        <MdCatalog :offsetTop="80" :editorId="state.id" :scrollElement="scrollElement" theme="dark" />
+                        <MdCatalog :offsetTop="80" :editorId="state.editorId" :scrollElement="scrollElement" theme="dark" />
                     </template>
                 </Card>
             </aside>
@@ -26,7 +26,7 @@
 import PageHeader from './PageHeader.vue'
 import Card from '../../components/Card.vue'
 import { useArticleStore } from '@/stores/article'
-import { useRoute } from 'vue-router'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 import { onMounted, ref, computed, reactive } from 'vue'
 import API from '@/network/api/index'
 
@@ -42,16 +42,18 @@ const route = useRoute()
 const articleStroe = useArticleStore()
 let state = reactive<{
     docs: Doc[],
-    id: string
+    id: number,
+    editorId: string
 }>({
     docs: [],
-    id: 'my-editor'
+    editorId: 'my-editor',
+    id: 0
 })
 
 let text = ref<string>('')
 
 const getArticleContentByArtId = async () => {
-    const data = await API.getArticleDetailByArtId({ id: Number(route.params.id) })
+    const data = await API.getArticleDetailByArtId({ id: state.id })
     text.value = data.content_md || ''
 }
 let summary = computed(() => articleStroe.article.summary)
@@ -61,7 +63,10 @@ const onGetCatalog = (list: Doc[]) => {
 }
 
 onMounted(() => {
+    state.id = Number(route.params.id)
+    articleStroe.getArticle(state.id)
     getArticleContentByArtId()
+
 })
 
 </script>
