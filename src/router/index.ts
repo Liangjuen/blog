@@ -54,7 +54,21 @@ const router = createRouter({
       path: '/404',
       component: () => import('../views/404.vue')
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if ((to.name == 'HomePage' && from.name == 'Home') || (to.name == 'Home' && from.name == 'HomePage')) {
+      return {
+        el: '#article',
+        top: 60,
+        behavior: 'smooth',
+      }
+    } else {
+      return {
+        top: 0,
+        behavior: 'smooth',
+      }
+    }
+  }
 })
 
 router.beforeEach((to, from, next) => {

@@ -1,11 +1,27 @@
 <template>
     <div class="article-page-container">
         <PageHeader />
-        <section class="articl center" id="more">
+        <section class="article center" id="more">
             <div class="article-main">
                 <p class="summary">{{ summary }}</p>
                 <MdEditor :editorId="state.editorId" v-model="text" theme="dark" previewTheme="github" codeTheme="github"
                     previewOnly @onGetCatalog="onGetCatalog" />
+                <div class="prev-next">
+                    <div class="pager">
+                        <router-link :to="{ name: 'Article', params: { id: prevPage.id } }" class="pager-link prev"
+                            v-if="prevPage">
+                            <span class="desc">Previous page</span>
+                            <span class="title">{{ prevPage.title }}</span>
+                        </router-link>
+                    </div>
+                    <div class="pager">
+                        <router-link :to="{ name: 'Article', params: { id: nextPage.id } }" class="pager-link next"
+                            v-if="nextPage">
+                            <span class="desc">Next page</span>
+                            <span class="title">{{ nextPage.title }}</span>
+                        </router-link>
+                    </div>
+                </div>
             </div>
             <aside class="article-right">
                 <Card v-if="state.docs.length">
@@ -61,7 +77,14 @@ let summary = computed(() => articleStroe.article.summary)
 const onGetCatalog = (list: Doc[]) => {
     state.docs = list
 }
-
+let prevPage = computed(() => {
+    let currentIndex = articleStroe.prevArtList.findIndex(i => i.id === state.id)
+    return (currentIndex && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex - 1] : undefined
+})
+let nextPage = computed(() => {
+    let currentIndex = articleStroe.prevArtList.findIndex(i => i.id === state.id)
+    return (currentIndex < articleStroe.prevArtList.length && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex + 1] : undefined
+})
 onMounted(() => {
     state.id = Number(route.params.id)
     articleStroe.getArticle(state.id)
@@ -72,7 +95,7 @@ onMounted(() => {
 </script>
 
 <style>
-.articl {
+.article {
     padding: 15px;
     display: -webkit-box;
     display: flex;
@@ -107,6 +130,13 @@ onMounted(() => {
 .github-theme pre code,
 p {
     font-size: 1rem;
+}
+
+pre,
+code,
+kbd,
+samp {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 h1,
@@ -204,6 +234,45 @@ h6 {
     color: var(--color-active);
 }
 
+.prev-next {
+    display: flex;
+    margin-top: 20px;
+}
+
+.pager {
+    width: 50%;
+    cursor: pointer;
+    padding: 10px 20px 20px 20px;
+}
+
+.pager-link {
+    display: block;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    transition: border .3s;
+}
+
+.pager-link .desc,
+.title {
+    display: block;
+    width: 100%;
+    line-height: 2;
+}
+
+.pager-link .title {
+    color: var(--color-active);
+}
+
+.pager-link:hover {
+    border: 1px solid var(--color-border-hover);
+}
+
+.next .desc,
+.next .title {
+    text-align: end;
+}
+
 @media screen and (max-width: 900px) {
     .article-right {
         display: none;
@@ -211,8 +280,16 @@ h6 {
 }
 
 @media screen and (max-width: 750px) {
-    .articl {
-        padding: 0;
+    .article {
+        padding: 0 0 15px 0;
+    }
+
+    .prev-next {
+        flex-direction: column;
+    }
+
+    .pager {
+        width: 100%;
     }
 }
 </style>

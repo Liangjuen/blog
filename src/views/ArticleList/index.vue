@@ -16,7 +16,7 @@
                                 <a v-for="i in item.tags"
                                     @click.stop="router.push({ name: 'ArticleList', params: { type: 'tags', id: i } })">
                                     <i class="tag-item"></i>
-                                    {{ findTag(i) }}
+                                    {{ findTag(Number(i)) }}
                                 </a>
                             </div>
                             <span>{{ format(item.pub_date || item.create_time, 'YYYY-MM-DD') }}</span>
@@ -71,6 +71,7 @@ const getArticleListByTypeId = async () => {
         item.tags = item.tags.split(',').map((n: string) => Number(n))
         return item
     })
+    articleStore.setPrevArtList(list)
     articleData.offset = offset
     articleData.pageSize = pageSize
     articleData.total = total

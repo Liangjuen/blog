@@ -62,7 +62,6 @@ let state = reactive<State>({
 
 state.offset = props.pageNum ? Number(props.pageNum) - 1 : 0
 
-// let baseHref = computed(() => document.location.href.split('#article')[0])
 let pageCount = computed(() => state.total % state.pageSize == 0 ? state.total / state.pageSize : Math.floor(state.total / state.pageSize) + 1)
 
 // 获取文章列表
@@ -72,6 +71,7 @@ const getArtList = async () => {
         i.tags = i.tags.split(',').map((n: string) => Number(n))
         return i
     })
+    articleStore.setPrevArtList(list)
     state.offset = offset
     state.total = total
 }
@@ -103,7 +103,6 @@ const handelPageChange = (num: number) => {
 onMounted(() => {
     getTags()
     getArtList()
-    // document.location.href = baseHref.value + '#article'
 })
 </script>
 
@@ -152,15 +151,7 @@ onMounted(() => {
 .title .link {
     font-size: 1.2rem;
     font-weight: bold;
-    /* background: linear-gradient(to right, #ff9700, #ff9700) no-repeat right bottom;
-    background-size: 0 2px;
-    transition: background-size 500ms; */
 }
-
-/* .content-item:hover .link {
-    background-position-x: left;
-    background-size: 100% 2px;
-} */
 
 .title .link,
 .Abstract {

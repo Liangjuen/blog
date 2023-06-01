@@ -2,13 +2,16 @@ import { defineStore } from 'pinia'
 import { Names } from './store-name'
 import API from '@/network/api/index'
 
+type PrevArtList = { id: number, title: string }[]
+
 export const useArticleStore = defineStore(Names.ARTICLE, {
     state: () => {
         return {
             id: 0,
             article: <API.Article>{},
             categoris: <API.CateList>[],
-            tags: <API.TagList>[]
+            tags: <API.TagList>[],
+            prevArtList: <PrevArtList>[]
         }
     },
 
@@ -30,6 +33,10 @@ export const useArticleStore = defineStore(Names.ARTICLE, {
         async getArticle(id: number) {
             const data = await API.getArticleById({ id })
             this.article = data
+        },
+
+        setPrevArtList(list: API.Article[]) {
+            this.prevArtList = list.map(art => ({ id: art.id, title: art.title }))
         }
     },
 

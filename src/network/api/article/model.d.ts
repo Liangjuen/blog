@@ -15,7 +15,6 @@ declare namespace API {
         id: number,
         summary: string,
         create_time: string,
-        tags: string,
         [propName: string]: any
     }
 
