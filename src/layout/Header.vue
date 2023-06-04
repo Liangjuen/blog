@@ -50,13 +50,14 @@ let activePath = useActiveNav()
 
 <style>
 header {
-    background-color: var(--color-background);
+    background-color: rgba(var(--theme-bg-rgb), var(--bg-opacity));
     height: 60px;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
+    backdrop-filter: blur(var(--backdrop-filter));
 }
 
 .header-inner {

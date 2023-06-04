@@ -32,6 +32,7 @@ export const useArticleStore = defineStore(Names.ARTICLE, {
 
         async getArticle(id: number) {
             const data = await API.getArticleById({ id })
+            data.tags = data.tags.split(',')
             this.article = data
         },
 

@@ -1,26 +1,32 @@
 /* color palette from <https://github.com/vuejs/theme> */
 
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+  --bg-opacity: .5;
+  --white-rgb: 255, 255, 255;
+  --black-rgb: 30, 30, 30;
+  --white-soft-rgb: 241, 242, 246;
+  --white-mute-rgb: 223, 228, 234;
+  --black-soft-rgb: 45, 52, 54;
+  --black-mute-rgb: 30, 39, 46;
+  --backdrop-filter: 6px;
 
-  --vt-c-black: #1e272e;
-  --vt-c-black-soft: #3d3d3d;
-  --vt-c-black-mute: #303952;
+  --vt-c-white: rgb(var(--white-rgb));
+  --vt-c-white-soft: rgb(var(--white-soft-rgb));
+  --vt-c-white-mute: rgb(var(--white-mute-rgb));
 
-  --vt-c-indigo: #2c3e50;
+  --vt-c-black: rgb(var(--black-rgb));
+  --vt-c-black-soft: rgb(var(--black-soft-rgb));
+  --vt-c-black-mute: rgb(var(--black-mute-rgb));
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-1: var(--vt-c-black);
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(241, 242, 246, 0.66);
-
 
   /* 页头水波特效 */
   --wave-1: #4cd137;
@@ -56,7 +62,7 @@ a {
 
 body {
   color: var(--color-text);
-  transition: color 0.4s, background-color 0.3s, scale 0.3s;
+  transition: color 0.4s, background-color 0.5s, scale 0.3s;
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

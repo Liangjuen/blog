@@ -121,7 +121,6 @@ onMounted(() => {
     margin: 20px 15px 0 15px;
     transition: box-shadow .4s, transform .2s ease-in;
     display: flex;
-    border: 1px solid var(--color-background-mute);
     overflow: hidden;
     cursor: pointer;
     animation: artitem 1.4s;

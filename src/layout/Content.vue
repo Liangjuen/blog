@@ -8,8 +8,8 @@
 </script>
 
 <style scoped>
-    .main-container {
-        margin-top: 60px;
-        background-color: var(--color-background-main);
-    }
+.main-container {
+    margin-top: 60px;
+    background-color: var(--color-background-main);
+}
 </style>

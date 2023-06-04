@@ -53,8 +53,7 @@ let activePath = useActiveNav()
     top: 0;
     width: 100vw;
     height: 100vh;
-    backdrop-filter: blur(4px);
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, .7);
     z-index: 199;
     overflow-y: auto;
     overflow-x: hidden;

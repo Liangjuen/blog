@@ -1,4 +1,5 @@
 html[theme='light'] {
+    --theme-bg-rgb: var(--white-rgb);
     --color-background: var(--vt-c-white);
     --color-background-soft: var(--vt-c-white-soft);
     --color-background-mute: var(--vt-c-white-mute);

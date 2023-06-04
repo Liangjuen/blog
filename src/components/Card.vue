@@ -16,8 +16,8 @@
     background-color: var(--color-text-background);
     padding: 15px;
     border-radius: 10px;
-    box-shadow: var(--box-shadow);
 }
+
 .card-title {
     margin-bottom: 15px;
     font-weight: bold;

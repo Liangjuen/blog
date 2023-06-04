@@ -99,6 +99,7 @@ onMounted(() => {
     padding: 15px;
     display: -webkit-box;
     display: flex;
+    font-size: 15px;
 }
 
 .md-editor-dark {
@@ -127,16 +128,10 @@ onMounted(() => {
     color: var(--color-active) !important;
 }
 
-.github-theme pre code,
-p {
-    font-size: 1rem;
-}
-
-pre,
-code,
-kbd,
-samp {
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+.article .github-theme pre,
+.github-theme code {
+    font-size: 13.6px;
+    font-family: Source Code Pro, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 }
 
 h1,
@@ -166,7 +161,7 @@ h6 {
     border-radius: 10px;
     flex-direction: column;
     min-width: 0;
-    box-shadow: var(--box-shadow);
+    /* box-shadow: var(--box-shadow); */
     overflow: hidden;
 }
 
