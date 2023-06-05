@@ -1,5 +1,5 @@
 <template>
-    <div class="home-page-container">
+    <div class="home-page-container home">
         <Hero />
         <div id="article"></div>
         <div class="main-content center">
@@ -107,6 +107,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+main .home {
+    padding: 0;
+}
+
 .main-content {
     margin-top: 74px;
     display: flex;

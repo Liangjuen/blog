@@ -15,8 +15,7 @@
                     <nav>
                         <router-link v-for="item in navList" :to="item.path" class="link-item"
                             :class="activePath.includes(item.path) ? 'active' : ''">
-                            <i class="iconfont"
-                                :class="item.icon + ' ' + (activePath.includes(item.path) ? 'active' : '')"></i>
+                            <i class="iconfont" :class="item.icon"></i>
                             {{ item.title }}
                         </router-link>
                     </nav>
@@ -36,7 +35,7 @@
 import ThemeCheckBox from '../components/ThemeCheckBox.vue'
 import Screen from '../components/Screen.vue'
 import useGetNavList, { useActiveNav } from '../hooks/nav'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 const iconTheme = ref<Element>()
 let showThemeCheckBox = ref<boolean>(false)
 let showRightScreen = ref<boolean>(false)
@@ -45,25 +44,25 @@ const openThemeCheckBox = () => showThemeCheckBox.value = true
 const closeThemeCheckBox = () => showThemeCheckBox.value = false
 const openRightScreen = () => showRightScreen.value = true
 let activePath = useActiveNav()
-
 </script>
 
-<style>
+<style scoped>
 header {
-    background-color: rgba(var(--theme-bg-rgb), var(--bg-opacity));
     height: 60px;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
+    transition: all .5s;
+    background-color: rgba(var(--theme-bg-rgb), var(--bg-opacity));
     backdrop-filter: blur(var(--backdrop-filter));
 }
 
 .header-inner {
     height: 100%;
-    padding: 15px;
-    line-height: 30px;
+    padding: 0 15px;
+    line-height: 60px;
     display: flex;
     justify-content: space-between;
 }
@@ -72,15 +71,22 @@ header {
     font-size: 16px;
 }
 
-.header-inner span,
+.header-inner>span,
 .link-item {
+    display: inline-block;
+    height: 100%;
+    padding: 0 12px;
+}
+
+.icon-box span {
     transition: color 0.4s, top .25s, transform .25s;
 }
 
 .header-inner span:hover,
 .header-inner a .icon-home:hover,
-.link-item:hover {
-    color: var(--color-border-hover);
+.link-item:hover,
+.active {
+    color: var(--color-active);
 }
 
 .to-home {
@@ -108,10 +114,6 @@ header {
     color: var(--color-heading);
 }
 
-.active {
-    color: var(--color-active);
-}
-
 .btn-container,
 .links,
 .links {
@@ -132,17 +134,13 @@ header {
     }
 }
 
-.link-item {
-    margin-left: 1.4rem;
-}
-
 .link-item .iconfont {
-    margin-right: 3px;
+    margin-right: 1.5px;
 }
 
 .icon-box {
     position: relative;
-    top: 6px;
+    top: 20px;
     width: 18px;
     height: 16px;
     overflow: hidden;
@@ -190,6 +188,7 @@ header {
 .top-theme-check-box {
     position: absolute;
     top: 50px;
+    line-height: 42px;
     left: -64px;
     box-shadow: var(--box-shadow);
 }

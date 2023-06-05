@@ -95,6 +95,10 @@ onMounted(() => {
 </script>
 
 <style>
+.article-page-container {
+    padding: 0;
+}
+
 .article {
     padding: 15px;
     display: -webkit-box;

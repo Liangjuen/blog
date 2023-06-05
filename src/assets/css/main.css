@@ -14,9 +14,8 @@
 }
 
 #app>main {
-  margin-top: 60px;
   background-color: var(--color-background-main);
-  min-height: calc(100vh - 140px);
+  min-height: calc(100vh - 80px);
 }
 
 @media screen and (max-width: 374px) {

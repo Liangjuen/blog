@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    <div>PERSON</div>
+    <div class="about-page-container">PERSON</div>
 </template>

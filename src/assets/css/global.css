@@ -1,3 +1,7 @@
+[class*=-page-container] {
+    padding-top: 60px;
+}
+
 [class*=-page-container]>.center>.card {
     background-color: var(--color-backgorund-main);
 }
