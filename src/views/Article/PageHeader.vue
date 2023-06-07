@@ -54,7 +54,8 @@ import { useArticleStore } from '@/stores/article'
 import { format } from '@/hooks/dateFormat'
 
 const articleStore = useArticleStore()
-
+articleStore.getCategoris()
+articleStore.getTags()
 let article = computed((): API.Article => articleStore.article)
 let getRandomInt = (max: number) => Math.floor(Math.random() * max)
 let theme = computed(() => `theme${(getRandomInt(4) + 1)}`)
@@ -128,7 +129,7 @@ let category = computed(() => articleStore.categoris.find(i => i.id == article.v
 
 .article-top {
     position: absolute;
-    top: 40%;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -254,7 +255,7 @@ section {
 }
 
 .wave:nth-of-type(1) {
-    --speed: 38;
+    --speed: 28;
     --opacity: 1;
     --height: 6;
     --width: 520;
@@ -265,7 +266,7 @@ section {
 }
 
 .wave:nth-of-type(2) {
-    --speed: 32;
+    --speed: 30;
     --opacity: 0.6;
     --height: 6;
     --width: 520;
@@ -287,7 +288,7 @@ section {
 }
 
 .wave:nth-of-type(4) {
-    --speed: 36;
+    --speed: 38;
     --opacity: 0.6;
     --height: 10;
     --width: 500;
@@ -299,8 +300,15 @@ section {
 
 @media (max-width: 750px) {
     .wave {
-        height: calc(var(--height, 0) * 0.7vh);
-        width: calc(var(--width, 0) * 1.5vw);
+        height: calc(var(--height, 0) * 0.75vh);
+        width: calc(var(--width, 0) * 1.8vw);
+    }
+}
+
+@media screen and (min-width: 751px) and (max-width: 1080px) {
+    .wave {
+        height: calc(var(--height, 0) * 0.8vh);
+        width: calc(var(--width, 0) * 1.2vw);
     }
 }
 

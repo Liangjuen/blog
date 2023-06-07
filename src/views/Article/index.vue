@@ -30,7 +30,8 @@
                         <span>目录</span>
                     </template>
                     <template #content>
-                        <MdCatalog :offsetTop="80" :editorId="state.editorId" :scrollElement="scrollElement" theme="dark" />
+                        <MdCatalog :offsetTop="80" :scrollElementOffsetTop="75" :editorId="state.editorId"
+                            :scrollElement="scrollElement" theme="dark" />
                     </template>
                 </Card>
             </aside>
