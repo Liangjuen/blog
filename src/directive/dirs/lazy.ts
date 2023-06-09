@@ -1,6 +1,6 @@
-import type { Directive } from 'vue'
+import type { Directive, DirectiveBinding } from 'vue'
 
-let lazy: Directive<HTMLImageElement, string> = async (el, binding) => {
+let lazy: Directive = async (el: HTMLImageElement, binding: DirectiveBinding) => {
     const observer = new IntersectionObserver((entry) => {
         if (entry[0].intersectionRatio > 0) {
             el.src = binding.value

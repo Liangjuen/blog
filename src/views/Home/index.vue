@@ -3,7 +3,7 @@
         <Hero />
         <div id="article"></div>
         <div class="main-content center">
-            <div class="content-item" v-for="item in state.list" :key="item.id" @click="readMore(item)">
+            <div v-rollIn class="content-item" v-for="item in state.list" :key="item.id" @click="readMore(item)">
                 <div class="cover-box"><img v-lazy="item.cover" /></div>
                 <div class="title">
                     <span class="link">{{ item.title }}</span>
@@ -127,7 +127,6 @@ main .home {
     display: flex;
     overflow: hidden;
     cursor: pointer;
-    animation: artitem 1.4s;
 }
 
 .content-item:hover {
@@ -261,18 +260,6 @@ main .home {
         width: 500px;
         max-width: 560px;
         margin: 20px 15px 0 15px;
-    }
-}
-
-@keyframes artitem {
-    0% {
-        transform: translateY(4px);
-        opacity: 0;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
     }
 }
 </style>

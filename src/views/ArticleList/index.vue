@@ -4,7 +4,7 @@
             <AllTags :total="state.arr.length" :list="state.arr" :type="type" :title="type == 'categoris' ? '分类' : '标签'"
                 :activeId="Number(id)" />
             <div class="articl-list">
-                <div class="article-item" v-for="item in articleData.list" @click="readMore(item)">
+                <div v-rollIn class="article-item" v-for="item in articleData.list" @click="readMore(item)">
                     <div class="left">
                         <img v-lazy="item.cover" />
                     </div>
