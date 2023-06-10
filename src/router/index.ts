@@ -67,7 +67,7 @@ const router = createRouter({
         top: 60,
         behavior: 'smooth',
       }
-    } else {
+    } else if (to.name !== 'article') {
       return {
         top: 0,
         behavior: 'smooth',

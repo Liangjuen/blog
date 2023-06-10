@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { Names } from './store-name'
 import API from '@/network/api/index'
-
+type Doc = {
+    text: string,
+    level: number
+}
 type PrevArtList = { id: number, title: string }[]
 
 export const useArticleStore = defineStore(Names.ARTICLE, {
@@ -11,7 +14,8 @@ export const useArticleStore = defineStore(Names.ARTICLE, {
             article: <API.Article>{},
             categoris: <API.CateList>[],
             tags: <API.TagList>[],
-            prevArtList: <PrevArtList>[]
+            prevArtList: <PrevArtList>[],
+            catalog: <Doc[]>[]
         }
     },
 

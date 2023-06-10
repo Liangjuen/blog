@@ -15,11 +15,11 @@ defineProps<{
     modelValue: boolean,
     className?: string
 }>()
-
+type Themes = 'dark' | 'light' | 'auto'
 const indexStore = useIndexStore()
 let theme = computed(() => indexStore.theme)
-const themeList = ['light', 'dark', 'auto']
-const checkTheme = (theme: string) => indexStore.theme = theme
+const themeList: Themes[] = ['light', 'dark', 'auto']
+const checkTheme = (theme: Themes) => indexStore.theme = theme
 
 </script>
 

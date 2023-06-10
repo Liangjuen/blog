@@ -4,8 +4,8 @@
         <section class="article center" id="more">
             <div class="article-main">
                 <p class="summary">{{ summary }}</p>
-                <MdEditor :editorId="state.editorId" v-model="text" theme="dark" previewTheme="github" codeTheme="github"
-                    previewOnly @onGetCatalog="onGetCatalog" />
+                <MdPreview :editorId="state.editorId" v-model="text" :theme="theme" :previewTheme="state.previewTheme"
+                    codeTheme="github" @onGetCatalog="onGetCatalog" />
                 <div class="prev-next">
                     <div class="pager">
                         <router-link :to="{ name: 'Article', params: { id: prevPage.id } }" class="pager-link prev"
@@ -24,14 +24,14 @@
                 </div>
             </div>
             <aside class="article-right">
-                <Card v-if="state.docs.length">
+                <Card v-if="articleStroe.catalog.length">
                     <template #title>
                         <i class="iconfont icon-dir_outline"></i>
                         <span>目录</span>
                     </template>
                     <template #content>
                         <MdCatalog :offsetTop="80" :scrollElementOffsetTop="75" :editorId="state.editorId"
-                            :scrollElement="scrollElement" theme="dark" />
+                            :scrollElement="scrollElement" />
                     </template>
                 </Card>
             </aside>
@@ -43,41 +43,46 @@
 import PageHeader from './PageHeader.vue'
 import Card from '../../components/Card.vue'
 import { useArticleStore } from '@/stores/article'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
+import { useIndexStore } from '../../stores/index'
+import { useRoute } from 'vue-router'
 import { onMounted, ref, computed, reactive } from 'vue'
 import API from '@/network/api/index'
-
-import MdEditor from 'md-editor-v3'
-import 'md-editor-v3/lib/style.css'
-const MdCatalog = MdEditor.MdCatalog
-const scrollElement = document.documentElement
-interface Doc {
+import { MdPreview, MdCatalog, config } from 'md-editor-v3'
+import 'md-editor-v3/lib/preview.css'
+import ancher from 'markdown-it-anchor'
+config({
+    markdownItConfig(mdit) {
+        mdit.use(ancher, {
+            permalink: true,
+            permalinkSymbol: '#',
+            permalinkBefore: true
+        });
+    }
+})
+interface Link {
     text: string,
     level: number
 }
+
 const route = useRoute()
 const articleStroe = useArticleStore()
-let state = reactive<{
-    docs: Doc[],
-    id: number,
-    editorId: string
-}>({
-    docs: [],
-    editorId: 'my-editor',
-    id: 0
-})
+const store = useIndexStore()
+const scrollElement = document.documentElement
 
+// Propertys ...
+let state = reactive<{
+    id: number,
+    editorId: string,
+    previewTheme: 'default' | 'github' | 'vuepress'
+}>({
+    id: 0,
+    editorId: 'my-mark',
+    previewTheme: 'github'
+})
 let text = ref<string>('')
 
-const getArticleContentByArtId = async () => {
-    const data = await API.getArticleDetailByArtId({ id: state.id })
-    text.value = data.content_md || ''
-}
+// Computeds ...
 let summary = computed(() => articleStroe.article.summary)
-
-const onGetCatalog = (list: Doc[]) => {
-    state.docs = list
-}
 let prevPage = computed(() => {
     let currentIndex = articleStroe.prevArtList.findIndex(i => i.id === state.id)
     return (currentIndex && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex - 1] : undefined
@@ -86,11 +91,24 @@ let nextPage = computed(() => {
     let currentIndex = articleStroe.prevArtList.findIndex(i => i.id === state.id)
     return (currentIndex < articleStroe.prevArtList.length && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex + 1] : undefined
 })
+
+let theme = computed(() => store.theme == 'auto' ? 'dark' : store.theme)
+
+// Functions ....
+const getArticleContentByArtId = async () => {
+    const data = await API.getArticleDetailByArtId({ id: state.id })
+    text.value = data.content_md || ''
+}
+
+const onGetCatalog = (list: Link[]) => {
+    articleStroe.catalog = list
+}
+
+// 生命周期钩子 ...
 onMounted(() => {
     state.id = Number(route.params.id)
     articleStroe.getArticle(state.id)
     getArticleContentByArtId()
-
 })
 
 </script>
@@ -111,12 +129,12 @@ onMounted(() => {
     --md-bk-color: var(--color-text-background) !important;
 }
 
-.md-editor-dark article.github-theme {
+.md-editor-dark article [class*=-theme] {
     --md-theme-color: var(--color-text) !important;
     --md-theme-heading-color: var(--color-text) !important;
 }
 
-.github-theme blockquote {
+[class*=-theme] blockquote {
     background-color: var(--color-background-mute);
     border-left: 0.25rem solid var(--color-border-hover);
     display: block;
@@ -125,16 +143,16 @@ onMounted(() => {
     padding: 0px 1.2em;
 }
 
-.github-theme table tr:nth-child(2n) {
+[class*=-theme] table tr:nth-child(2n) {
     background: none;
 }
 
-.github-theme a {
+[class*=-theme] a {
     color: var(--color-active) !important;
 }
 
-.article .github-theme pre,
-.github-theme code {
+.article [class*=-theme] pre,
+[class*=-theme] code {
     font-size: 13.6px;
     font-family: Source Code Pro, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 }

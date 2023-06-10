@@ -1,5 +1,5 @@
 <template>
-    <section :class="theme">
+    <section>
         <div class="article-top center">
             <div class="article-att">
                 <div class="categoris">
@@ -31,6 +31,7 @@
                 </div>
             </div>
         </div>
+        <img :src="articleStore.article.cover" />
         <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 762 52.917" :key="item" preserveAspectRatio="none"
             v-for="item in 4">
             <defs>
@@ -135,9 +136,11 @@ let category = computed(() => articleStore.categoris.find(i => i.id == article.v
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-height: 60%;
+    height: 100%;
+    backdrop-filter: blur(var(--backdrop-filter));
     width: 100%;
     box-sizing: border-box;
+    z-index: 1;
 }
 
 .article-att {
@@ -162,7 +165,7 @@ let category = computed(() => articleStore.categoris.find(i => i.id == article.v
 }
 
 .category-item:hover {
-    color: var(--color-text-hover);
+    color: var(--color-active);
     background-color: var(--vt-c-white);
 }
 
@@ -247,6 +250,7 @@ section {
     left: 0;
     right: 0;
     bottom: -12px;
+    z-index: 2;
 }
 
 .wave {
