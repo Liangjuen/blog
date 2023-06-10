@@ -97,6 +97,7 @@ header {
 
 .icon-home {
     display: none;
+    font-size: 18px;
 }
 
 .myself {

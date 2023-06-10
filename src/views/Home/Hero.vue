@@ -1,6 +1,6 @@
 <template>
     <div class="hero">
-        <div class="saying">理想的人生一定是靠拼来的，许愿到不了。</div>
+        <p v-roll class="saying">理想的人生一定是靠拼来的，许愿到不了。</p>
     </div>
 </template>
 

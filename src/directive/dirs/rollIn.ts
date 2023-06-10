@@ -50,3 +50,26 @@ export default <Directive>{
         observer.unobserve(el)
     }
 }
+
+export const roll = <Directive>{
+    mounted(el: Element, binding: DirectiveBinding) {
+        // 创建动画
+        const animation = el.animate(
+            [
+                {
+                    transform: `translateY(${DISTANCE}px)`,
+                    opacity: 0
+                },
+                {
+                    transform: 'translateY(0)',
+                    opacity: 1
+                }
+            ],
+            {
+                duration: DURATION,
+                easing: 'ease'
+            }
+        )
+        animation.play()
+    }
+}

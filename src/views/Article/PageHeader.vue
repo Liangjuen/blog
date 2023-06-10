@@ -137,7 +137,7 @@ let category = computed(() => articleStore.categoris.find(i => i.id == article.v
     flex-direction: column;
     justify-content: center;
     height: 100%;
-    backdrop-filter: blur(var(--backdrop-filter));
+    backdrop-filter: blur(12px);
     width: 100%;
     box-sizing: border-box;
     z-index: 1;
@@ -160,8 +160,10 @@ let category = computed(() => articleStore.categoris.find(i => i.id == article.v
     border-radius: 8px;
     margin-right: 1rem;
     font-weight: 600;
+    backdrop-filter: blur(--backdrop-filter);
+    background-color: rgba(var(--white-rgb), var(--bg-opacity));
     transition: color 0.4s, backgorund-color 0.3s;
-    box-shadow: var(--box-shadow);
+    /* box-shadow: var(--box-shadow); */
 }
 
 .category-item:hover {

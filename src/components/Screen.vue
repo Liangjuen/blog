@@ -4,16 +4,16 @@
     </Transition>
     <Transition name="menu">
         <div v-if="showMenuContainer" class="menu-container">
-            <div class="card">
-                <nav>
-                    <router-link v-for="item in navList" :to="item.path" class="nav-item" @click="close"
-                        :class="activePath.includes(item.path) ? 'active' : ''"> <i class="iconfont"
-                            :class="item.icon + ' ' + (activePath.includes(item.path) ? 'active' : '')"></i>
-                        {{ item.title }}
-                    </router-link>
-                </nav>
-                <ThemeCheckBox v-model="showMenuContainer" />
-            </div>
+            <!-- <div class="card"> -->
+            <nav>
+                <router-link v-for="item in navList" :to="item.path" class="nav-item" @click="close"
+                    :class="activePath.includes(item.path) ? 'active' : ''"> <i class="iconfont"
+                        :class="item.icon + ' ' + (activePath.includes(item.path) ? 'active' : '')"></i>
+                    {{ item.title }}
+                </router-link>
+            </nav>
+            <ThemeCheckBox v-model="showMenuContainer" />
+            <!-- </div> -->
         </div>
     </Transition>
 </template>
