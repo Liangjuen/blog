@@ -3,8 +3,8 @@
         <div class="article-top center">
             <div class="article-att">
                 <div class="categoris">
-                    <router-link :to="{ name: 'ArticleList', params: { type: 'categoris', id: article.cate_id } }"
-                        @click.stop="" class="category-item">
+                    <router-link :to="{ name: 'ArticleList', params: { type: 'categoris', id: article.cate_id || 0 } }"
+                        class="category-item">
                         {{ category?.name }}
                     </router-link>
                 </div>
@@ -53,10 +53,15 @@
 import { computed } from 'vue'
 import { useArticleStore } from '@/stores/article'
 import { format } from '@/hooks/dateFormat'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+const id = computed(() => Number(route.params.id))
 const articleStore = useArticleStore()
 articleStore.getCategoris()
 articleStore.getTags()
+articleStore.getArticle(id.value)
+
 let article = computed((): API.Article => articleStore.article)
 let getRandomInt = (max: number) => Math.floor(Math.random() * max)
 let theme = computed(() => `theme${(getRandomInt(4) + 1)}`)
@@ -65,7 +70,6 @@ let tags = computed(() => articleStore.article.tags)
 const findTag = (tagId: number) => articleStore.tags.find((item: { id: number }) => item.id == tagId)?.name
 
 let category = computed(() => articleStore.categoris.find(i => i.id == article.value.cate_id))
-
 </script>
 
 <style scoped>

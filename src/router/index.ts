@@ -22,9 +22,10 @@ const router = createRouter({
           props: ({ params }) => params
         },
         {
-          path: '/article/:id',
+          path: '/article/:id/',
           name: 'Article',
-          component: () => import('../views/Article/index.vue')
+          component: () => import('../views/Article/index.vue'),
+          props: ({ params }) => params
         },
         {
           path: '/:type/:id/',
@@ -67,7 +68,7 @@ const router = createRouter({
         top: 60,
         behavior: 'smooth',
       }
-    } else if (to.name !== 'article') {
+    } else {
       return {
         top: 0,
         behavior: 'smooth',

@@ -7,16 +7,14 @@
                 <MdPreview :editorId="state.editorId" v-model="text" :theme="theme" :previewTheme="state.previewTheme"
                     codeTheme="github" @onGetCatalog="onGetCatalog" />
                 <div class="prev-next">
-                    <div class="pager">
-                        <router-link :to="{ name: 'Article', params: { id: prevPage.id } }" class="pager-link prev"
-                            v-if="prevPage">
+                    <div class="pager" v-if="prevPage">
+                        <router-link :to="{ name: 'Article', params: { id: prevPage.id } }" class="pager-link prev">
                             <span class="desc">Previous page</span>
                             <span class="title">{{ prevPage.title }}</span>
                         </router-link>
                     </div>
-                    <div class="pager">
-                        <router-link :to="{ name: 'Article', params: { id: nextPage.id } }" class="pager-link next"
-                            v-if="nextPage">
+                    <div class="pager" v-if="nextPage">
+                        <router-link :to="{ name: 'Article', params: { id: nextPage.id } }" class="pager-link next">
                             <span class="desc">Next page</span>
                             <span class="title">{{ nextPage.title }}</span>
                         </router-link>
@@ -50,6 +48,7 @@ import API from '@/network/api/index'
 import { MdPreview, MdCatalog, config } from 'md-editor-v3'
 import 'md-editor-v3/lib/preview.css'
 import ancher from 'markdown-it-anchor'
+// 配置标题链接
 config({
     markdownItConfig(mdit) {
         mdit.use(ancher, {
@@ -59,6 +58,9 @@ config({
         });
     }
 })
+const props = defineProps<{
+    id: string
+}>()
 interface Link {
     text: string,
     level: number
@@ -85,11 +87,11 @@ let text = ref<string>('')
 let summary = computed(() => articleStroe.article.summary)
 let prevPage = computed(() => {
     let currentIndex = articleStroe.prevArtList.findIndex(i => i.id === state.id)
-    return (currentIndex && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex - 1] : undefined
+    return (currentIndex && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex - 1] : 0
 })
 let nextPage = computed(() => {
     let currentIndex = articleStroe.prevArtList.findIndex(i => i.id === state.id)
-    return (currentIndex < articleStroe.prevArtList.length && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex + 1] : undefined
+    return (currentIndex < articleStroe.prevArtList.length && currentIndex !== -1) ? articleStroe.prevArtList[currentIndex + 1] : 0
 })
 
 let theme = computed(() => store.theme == 'auto' ? 'dark' : store.theme)
@@ -103,11 +105,9 @@ const getArticleContentByArtId = async () => {
 const onGetCatalog = (list: Link[]) => {
     articleStroe.catalog = list
 }
-
 // 生命周期钩子 ...
 onMounted(() => {
-    state.id = Number(route.params.id)
-    articleStroe.getArticle(state.id)
+    state.id = Number(props.id)
     getArticleContentByArtId()
 })
 
